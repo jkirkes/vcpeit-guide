@@ -481,11 +481,11 @@
   <div id="schedule" class="tab active">
 
     <div class="day-header" data-date="2026-03-30">Monday, March 30</div>
-    <div class="event social" data-datetime="2026-03-30T18:00">
+    <div class="event social clickable" data-datetime="2026-03-30T18:00" onclick="openModal('food-reception')">
       <div class="event-time">6:00 PM</div>
       <div class="event-details">
         <div class="event-title">Welcome Reception</div>
-        <div class="event-meta">Rainbow Suite / Patio</div>
+        <div class="event-meta">Rainbow Suite / Patio &middot; Tap for menu</div>
         <span class="event-tag tag-social">Social</span>
       </div>
     </div>
@@ -499,11 +499,11 @@
     </div>
 
     <div class="day-header" data-date="2026-03-31">Tuesday, March 31</div>
-    <div class="event meal" data-datetime="2026-03-31T08:00">
+    <div class="event meal clickable" data-datetime="2026-03-31T08:00" onclick="openModal('food-tue-breakfast')">
       <div class="event-time">8:00 AM</div>
       <div class="event-details">
         <div class="event-title">Breakfast</div>
-        <div class="event-meta">Rooftop</div>
+        <div class="event-meta">Rooftop &middot; Tap for menu</div>
         <span class="event-tag tag-meal">Meal</span>
       </div>
     </div>
@@ -542,11 +542,11 @@
         <span class="event-tag tag-speaker">Speaker</span>
       </div>
     </div>
-    <div class="event meal" data-datetime="2026-03-31T12:00">
+    <div class="event meal clickable" data-datetime="2026-03-31T12:00" onclick="openModal('food-tue-lunch')">
       <div class="event-time">12:00 PM</div>
       <div class="event-details">
         <div class="event-title">Lunch</div>
-        <div class="event-meta">South Pacific 3</div>
+        <div class="event-meta">South Pacific 3 &middot; Tap for menu</div>
         <span class="event-tag tag-meal">Meal</span>
       </div>
     </div>
@@ -604,11 +604,11 @@
     </div>
 
     <div class="day-header" data-date="2026-04-01">Wednesday, April 1</div>
-    <div class="event meal" data-datetime="2026-04-01T08:00">
+    <div class="event meal clickable" data-datetime="2026-04-01T08:00" onclick="openModal('food-wed-breakfast')">
       <div class="event-time">8:00 AM</div>
       <div class="event-details">
         <div class="event-title">Breakfast</div>
-        <div class="event-meta">Rooftop</div>
+        <div class="event-meta">Rooftop &middot; Tap for menu</div>
         <span class="event-tag tag-meal">Meal</span>
       </div>
     </div>
@@ -644,11 +644,11 @@
         <span class="event-tag tag-roundtable">Roundtable</span>
       </div>
     </div>
-    <div class="event meal" data-datetime="2026-04-01T11:45">
+    <div class="event meal clickable" data-datetime="2026-04-01T11:45" onclick="openModal('food-wed-lunch')">
       <div class="event-time">11:45 AM</div>
       <div class="event-details">
         <div class="event-title">Lunch &amp; Morning Debrief</div>
-        <div class="event-meta">South Pacific 1/2</div>
+        <div class="event-meta">South Pacific 1/2 &middot; Tap for menu</div>
         <span class="event-tag tag-meal">Meal</span>
       </div>
     </div>
@@ -697,11 +697,11 @@
     </div>
 
     <div class="day-header" data-date="2026-04-02">Thursday, April 2</div>
-    <div class="event meal" data-datetime="2026-04-02T08:00">
+    <div class="event meal clickable" data-datetime="2026-04-02T08:00" onclick="openModal('food-thu-breakfast')">
       <div class="event-time">8:00 AM</div>
       <div class="event-details">
         <div class="event-title">Breakfast</div>
-        <div class="event-meta">Rooftop</div>
+        <div class="event-meta">Rooftop &middot; Tap for menu</div>
         <span class="event-tag tag-meal">Meal</span>
       </div>
     </div>
@@ -745,11 +745,11 @@
         <span class="event-tag tag-debrief">Debrief</span>
       </div>
     </div>
-    <div class="event meal" data-datetime="2026-04-02T12:30">
+    <div class="event meal clickable" data-datetime="2026-04-02T12:30" onclick="openModal('food-thu-lunch')">
       <div class="event-time">12:30 PM</div>
       <div class="event-details">
         <div class="event-title">Lunch</div>
-        <div class="event-meta">South Pacific 3</div>
+        <div class="event-meta">South Pacific 3 &middot; Tap for menu</div>
         <span class="event-tag tag-meal">Meal</span>
       </div>
     </div>
@@ -1241,6 +1241,221 @@
     <h3 style="margin-top:1.2rem;">About Latacora</h3>
     <p>Latacora develops, grows, and maintains information security practices for tech-forward businesses. They join engineering teams as a retained security team, build or rebuild security practices, scale them to the organization's needs, and then help bring those capabilities in-house. Clients include Notion and other high-performing platforms across financial services, healthcare, and authentication.</p>
     <p style="margin-top:0.5rem;"><a href="mailto:lshoberg@latacora.com" style="color:var(--blue);font-weight:600;text-decoration:none;">lshoberg@latacora.com</a></p>
+  </div>
+</div>
+
+<!-- FOOD MODALS -->
+<div class="modal-overlay" id="food-reception" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('food-reception')">&times;</button>
+    <h2>Monday Welcome Reception</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">6:00 PM &middot; Rainbow Suite / Patio</p>
+    <h3>Whole Roasted Pig</h3>
+    <p>Hoisin, hot mustard sauce, cilantro, steamed rice buns, lomi-lomi Ho Farm tomato</p>
+    <h3>Displays</h3>
+    <ul>
+      <li><strong>Artisan Cheese &amp; Charcuterie</strong> &mdash; grain mustards, pickles, olives, nuts, dried fruit, local honey, fresh berries, crackers, crostini, lavosh</li>
+      <li><strong>Seasonal Island Fruit</strong> &mdash; pineapple, Kunia melon, Kahuku papaya, strawberries, lime, honey yogurt</li>
+      <li><strong>Honolulu Fish Auction Poke Bar</strong> &mdash; ahi poke, Hawaiian island catch kinilaw, tako poke, taro &amp; sweet potato chips</li>
+    </ul>
+    <h3>Passed Bites &mdash; Cold</h3>
+    <ul>
+      <li>Prosciutto Wrapped Pineapple Skewer (GF)</li>
+      <li>Chilled Jumbo Shrimp (DF/GF/NF) &mdash; mango cocktail sauce</li>
+      <li>Caprese Skewers (NF/V) &mdash; cherry tomato, mozzarella, basil, balsamic glaze</li>
+    </ul>
+    <h3>Passed Bites &mdash; Hot</h3>
+    <ul>
+      <li>Petite Crab Cake &mdash; mango aioli</li>
+      <li>Coconut Shrimp &mdash; sweet chili lime sauce</li>
+      <li>Kalua Pork Hawaiian Taro Sweet Roll Slider &mdash; pineapple slaw</li>
+      <li>Vegetable Spring Roll (V) &mdash; sweet chili sauce</li>
+    </ul>
+    <h3>Sweets</h3>
+    <ul>
+      <li>Anuenue Shaved Ice &mdash; mango, pineapple &amp; strawberry syrups</li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal-overlay" id="food-tue-breakfast" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('food-tue-breakfast')">&times;</button>
+    <h2>Tuesday Breakfast</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">8:00 AM &middot; Rooftop</p>
+    <p style="margin-top:0.5rem;font-size:0.85rem;">Hot Breakfast Buffet &middot; Includes pastries &amp; sliced seasonal fruit</p>
+    <h3>Entr&eacute;es</h3>
+    <ul>
+      <li>Eggs Benedict &mdash; poached egg, Canadian bacon, English muffin, hollandaise</li>
+      <li>Scrambled Cage-free Eggs (GF/NF/V)</li>
+    </ul>
+    <h3>Griddle</h3>
+    <ul><li>Golden Waffles (NF/V) &mdash; whipped butter, maple &amp; coconut syrup</li></ul>
+    <h3>Meats</h3>
+    <ul>
+      <li>Smoked Bacon (GF)</li>
+      <li>Portuguese Sausage</li>
+      <li>Chicken Mango Sausage (DF/GF/NF)</li>
+    </ul>
+    <h3>Sides</h3>
+    <ul>
+      <li>Roasted Breakfast Potatoes &mdash; garlic pesto</li>
+      <li>Vegetable Fried Rice &mdash; peas, carrot, Ewa sweet onion</li>
+    </ul>
+    <h3>Beverages</h3>
+    <ul><li>POG/Guava juice, Hawaiian blend &amp; decaf coffee, hot tea</li></ul>
+  </div>
+</div>
+
+<div class="modal-overlay" id="food-tue-lunch" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('food-tue-lunch')">&times;</button>
+    <h2>Tuesday Lunch &mdash; Taste of the Pacific</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">12:00 PM &middot; South Pacific 3</p>
+    <p style="margin-top:0.5rem;font-size:0.85rem;">Includes rolls &amp; butter, coffee &amp; tea</p>
+    <h3>Salads</h3>
+    <ul>
+      <li>Asian Chicken Salad &mdash; won bok, beansprout, mandarin, wonton strips, sesame vinaigrette</li>
+      <li>Hawaiian Chopped Salad (VG) &mdash; hearts of romaine, edamame, radish, sweet potato, papaya seed dressing</li>
+      <li>Kama'aina Macaroni Salad &mdash; boiled eggs, carrots, olives</li>
+    </ul>
+    <h3>Mains</h3>
+    <ul>
+      <li>Mongolian Beef &mdash; eggplant &amp; broccolini, black pepper sauce</li>
+      <li>Huli Huli Inasal Chicken &mdash; pickled local vegetable, annatto oil, pineapple teriyaki glaze</li>
+      <li>Grilled Daily Catch &mdash; tropical fruit relish, mango butter</li>
+    </ul>
+    <h3>Sides</h3>
+    <ul>
+      <li>Hamakua Mushroom Potato Gratin</li>
+      <li>Caramelized Maui Onion Roasted Potatoes</li>
+      <li>Lemongrass Steamed White Rice</li>
+    </ul>
+    <h3>Desserts</h3>
+    <ul>
+      <li>Lemon &amp; Yuzu Finger</li>
+      <li>Matcha Cheesecake</li>
+      <li>Guava Delight</li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal-overlay" id="food-wed-breakfast" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('food-wed-breakfast')">&times;</button>
+    <h2>Wednesday Breakfast</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">8:00 AM &middot; Rooftop</p>
+    <p style="margin-top:0.5rem;font-size:0.85rem;">Hot Breakfast Buffet &middot; Includes pastries &amp; sliced seasonal fruit</p>
+    <h3>Entr&eacute;es</h3>
+    <ul>
+      <li>Kalua Benedict &mdash; poached egg, kalua pork, watercress, taro muffin, tomato hollandaise</li>
+      <li>Vegetable Baked Egg Frittata &mdash; Ho Farm tomato, spinach, cheddar</li>
+    </ul>
+    <h3>Griddle</h3>
+    <ul><li>Hawaiian Sweetbread French Toast</li></ul>
+    <h3>Meats</h3>
+    <ul>
+      <li>Country Ham (GF)</li>
+      <li>Pork Sausage Link</li>
+      <li>Smoked Bacon (GF)</li>
+    </ul>
+    <h3>Sides</h3>
+    <ul>
+      <li>Hash Brown Potatoes (DF/EF/GF/NF)</li>
+      <li>Steamed White Rice (EF/GF/NF/VG)</li>
+    </ul>
+    <h3>Beverages</h3>
+    <ul><li>POG/Guava juice, Hawaiian blend &amp; decaf coffee, hot tea</li></ul>
+  </div>
+</div>
+
+<div class="modal-overlay" id="food-wed-lunch" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('food-wed-lunch')">&times;</button>
+    <h2>Wednesday Lunch &mdash; Catch A Wave</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">11:45 AM &middot; South Pacific 1/2</p>
+    <p style="margin-top:0.5rem;font-size:0.85rem;">Quick sandwich/wrap buffet &mdash; everyone changes for offsite after</p>
+    <h3>Salads</h3>
+    <ul>
+      <li>Mari's Garden &mdash; mixed greens, cucumber, carrots, radish, papaya seed dressing</li>
+      <li>Cucumber Quinoa Salad &mdash; sweet onion, Ho Farm tomato, feta, lemon parsley vinaigrette</li>
+    </ul>
+    <h3>Sandwiches &amp; Wraps</h3>
+    <ul>
+      <li>Turkey Pesto Wrap &mdash; lettuce, tomato, provolone, avocado roasted garlic aioli</li>
+      <li>Caprese Sandwich &mdash; fresh mozzarella, vine ripened tomato, basil, pesto aioli, ciabatta</li>
+    </ul>
+    <h3>Sweets</h3>
+    <ul>
+      <li>Kona Coffee Infused Cr&egrave;me Br&ucirc;l&eacute;e</li>
+      <li>Guava Mousse Chiffon Cake</li>
+    </ul>
+    <h3>Beverages</h3>
+    <ul><li>Hawaiian blend &amp; decaf coffee, hot tea</li></ul>
+  </div>
+</div>
+
+<div class="modal-overlay" id="food-thu-breakfast" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('food-thu-breakfast')">&times;</button>
+    <h2>Thursday Breakfast</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">8:00 AM &middot; Rooftop</p>
+    <p style="margin-top:0.5rem;font-size:0.85rem;">Hot Breakfast Buffet &middot; Includes pastries &amp; sliced seasonal fruit</p>
+    <h3>Entr&eacute;es</h3>
+    <ul>
+      <li>Herb Baked Shakshuka &mdash; Waialua fresh egg, San Marzano tomato, sweet pepper, chimichurri</li>
+      <li>Kiawe Smoked Bacon Frittata &mdash; potato, bell pepper, mozzarella blend</li>
+    </ul>
+    <h3>Griddle</h3>
+    <ul><li>Buttermilk Pancakes</li></ul>
+    <h3>Meats</h3>
+    <ul>
+      <li>Portuguese Sausage</li>
+      <li>Smoked Bacon (GF)</li>
+      <li>Chicken Mango Sausage (DF/GF/NF)</li>
+    </ul>
+    <h3>Sides</h3>
+    <ul>
+      <li>Breakfast Potato Medley &mdash; onion, parsley, bell pepper</li>
+      <li>Super Food Salad &mdash; ancient grains, kale, blueberries, strawberries, acai vinaigrette</li>
+    </ul>
+    <h3>Beverages</h3>
+    <ul><li>POG/Guava juice, Hawaiian blend &amp; decaf coffee, hot tea</li></ul>
+  </div>
+</div>
+
+<div class="modal-overlay" id="food-thu-lunch" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('food-thu-lunch')">&times;</button>
+    <h2>Thursday Lunch &mdash; Grilling Ohana Style</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">12:30 PM &middot; South Pacific 3</p>
+    <p style="margin-top:0.5rem;font-size:0.85rem;">Closing day BBQ lunch</p>
+    <h3>Salads</h3>
+    <ul>
+      <li>Island Mixed Greens &mdash; tomato, cucumber, radish, Ewa sweet onion vinaigrette, mango black pepper ranch</li>
+      <li>Loaded Potato Salad &mdash; applewood smoked bacon, cheddar, green onion</li>
+      <li>Pineapple Cole Slaw</li>
+    </ul>
+    <h3>From the Grill</h3>
+    <ul>
+      <li>Angus Chuck Patties</li>
+      <li>Island Catch &mdash; basil, garlic, virgin olive oil</li>
+      <li>Lilikoi BBQ Chicken Breast &mdash; charred green onion</li>
+      <li>Local Made Taro Patty &mdash; Ho Farm tomato, roasted Ali'i mushroom</li>
+    </ul>
+    <h3>Toppings &amp; Sides</h3>
+    <ul>
+      <li>Brioche bun, smoked bacon, tomato, lettuce, onion, pickles, cheeses, secret sauce, ketchup, mayo, mustard</li>
+      <li>Maui Style Potato Chips &amp; Ewa sweet onion dip</li>
+      <li>Smokey baked beans</li>
+    </ul>
+    <h3>Desserts</h3>
+    <ul>
+      <li>Coconut cake</li>
+      <li>Ube cheesecake</li>
+    </ul>
+    <h3>Beverages</h3>
+    <ul><li>Hawaiian blend &amp; decaf coffee, hot tea</li></ul>
   </div>
 </div>
 
