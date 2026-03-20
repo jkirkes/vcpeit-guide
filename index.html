@@ -814,7 +814,7 @@
       <div class="sponsor-email"><a href="mailto:hello@slalom.com" onclick="event.stopPropagation()">hello@slalom.com</a></div>
     </div>
 
-    <div class="sponsor-card" style="border-left-color: #059669;">
+    <div class="sponsor-card" style="border-left-color: #059669;" onclick="openModal('adaptive-modal')">
       <div class="sponsor-header">
         <div class="sponsor-logo" style="background: linear-gradient(135deg, #059669, #10b981);">Adaptive<br>Security</div>
         <div class="sponsor-title-block">
@@ -823,7 +823,7 @@
           <div class="sponsor-schedule">Tue Mar 31, 6:30 PM &middot; Village Green</div>
         </div>
       </div>
-      <div class="sponsor-desc">Sponsoring the Tuesday evening luau at the Village Green.</div>
+      <div class="sponsor-desc">AI-native security awareness platform protecting 500+ enterprises from deepfakes, GenAI phishing, smishing, and vishing. Backed by OpenAI, a16z, NVIDIA, and Andreessen Horowitz.</div>
       <div class="sponsor-email"><a href="mailto:info@adaptivesecurity.com" onclick="event.stopPropagation()">info@adaptivesecurity.com</a></div>
     </div>
 
@@ -1184,6 +1184,26 @@
         <a class="bio-name" href="mailto:PWess@wolfandco.com">Phil Wess</a>
         <div class="bio-role">Principal, Data Solutions</div>
         <div class="bio-desc">Leads implementation of value-driven data strategies and custom software development. Two decades of experience building software and data systems, focused on scalable data applications for mid-market, PE-owned companies.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADAPTIVE SECURITY MODAL -->
+<div class="modal-overlay" id="adaptive-modal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('adaptive-modal')">&times;</button>
+    <h2>Adaptive Security</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">Luau Sponsor &middot; Tuesday, March 31 &middot; 6:30 PM &middot; Village Green</p>
+    <p style="margin-top:1rem;">Adaptive Security is an AI-native cybersecurity company built to stop AI-powered social engineering. Instead of traditional learning modules, Adaptive delivers customized simulated attacks to employees &mdash; including real-time deepfake phone calls impersonating people within the organization. Less than one year after public launch, Adaptive protects over 500 enterprise customers.</p>
+    <p style="margin-top:0.5rem;font-size:0.85rem;color:#6b7b8d;">Backed by OpenAI Startup Fund, Andreessen Horowitz (a16z), NVIDIA, Bain Capital Ventures, Capital One Ventures, and Citi Ventures. $81M Series B announced in 2026.</p>
+    <h3>Founder</h3>
+    <div class="bio-card">
+      <div class="bio-avatar" style="background:linear-gradient(135deg,#059669,#10b981);width:48px;height:48px;font-size:0.85rem;">BL</div>
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:brian@adaptivesecurity.com">Brian Long</a>
+        <div class="bio-role">CEO &amp; Co-Founder</div>
+        <div class="bio-desc">Serial entrepreneur who previously founded Attentive ($500M+ ARR, 8,000+ customers, ~$900M raised from Sequoia Capital) and TapCommerce (acquired by Twitter). Co-founded Adaptive Security with Andrew Jones after seeing AI-enabled impersonation move from niche risk to practical problem for companies.</div>
       </div>
     </div>
   </div>
