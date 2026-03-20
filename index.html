@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VCPEIT 2026 - Honolulu</title>
+<style>
+  :root {
+    --navy: #0a2a5e;
+    --blue: #1a5fa8;
+    --teal: #3bb8c4;
+    --sand: #f5e6c8;
+    --sand-light: #faf3e6;
+    --cyan-light: #d4f1f4;
+    --white: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(180deg, var(--sand-light) 0%, var(--cyan-light) 50%, var(--white) 100%);
+    min-height: 100vh;
+    color: var(--navy);
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--sand) 0%, var(--teal) 50%, var(--navy) 100%);
+    padding: 2.5rem 1rem 2rem;
+    text-align: center;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0; right: 0;
+    height: 30px;
+    background: var(--sand-light);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .header-logo {
+    max-width: 280px;
+    width: 70%;
+    height: auto;
+    display: block;
+    margin: 0 auto 0.5rem;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
+  }
+  .header .venue { font-size: 0.85rem; opacity: 0.75; margin-top: 0.3rem; }
+
+  /* Sticky nav */
+  .nav-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  /* Global search */
+  .global-search {
+    padding: 0.5rem 1rem;
+    background: var(--sand-light);
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .global-search input {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    display: block;
+    padding: 0.6rem 1rem 0.6rem 2.2rem;
+    border: 2px solid #d1d9e0;
+    border-radius: 8px;
+    font-size: 16px; /* 16px prevents iOS auto-zoom on focus */
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: border-color 0.2s;
+    background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b7b8d' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E") no-repeat 0.7rem center;
+  }
+  .global-search input:focus { border-color: var(--teal); }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    border-bottom: 2px solid var(--teal);
+    flex-wrap: wrap;
+  }
+  .nav button {
+    padding: 0.65rem 1.2rem;
+    border: none;
+    background: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--blue);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav button:hover { background: var(--cyan-light); }
+  .nav button.active { color: var(--navy); border-bottom-color: var(--navy); background: var(--cyan-light); }
+
+  .content { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  .tab { display: none; }
+  .tab.active { display: block; }
+
+  /* Day header */
+  .day-header {
+    font-size: 1.3rem; font-weight: 700; color: var(--navy);
+    margin: 1.5rem 0 0.75rem; padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--teal);
+  }
+  .day-header:first-child { margin-top: 0; }
+
+  /* Event card */
+  .event {
+    display: flex; gap: 1rem; padding: 0.85rem 1rem; margin-bottom: 0.5rem;
+    border-radius: 10px; background: var(--white); border-left: 4px solid var(--teal);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); transition: transform 0.15s, box-shadow 0.15s;
+    cursor: default; position: relative;
+  }
+  .event:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+  .event.sponsor { border-left-color: var(--blue); }
+  .event.social { border-left-color: #e8a838; }
+  .event.meal { border-left-color: #6bbf6b; }
+  .event.roundtable { border-left-color: #9b6ec6; }
+  .event.slalom { border-left-color: #00b4e6; }
+  .event.now-indicator { outline: 2px solid #f59e0b; outline-offset: -1px; background: #fffbeb; }
+
+  .event-time { min-width: 70px; font-size: 0.8rem; font-weight: 700; color: var(--blue); padding-top: 2px; }
+  .event-details { flex: 1; }
+  .event-title { font-weight: 600; font-size: 0.95rem; }
+  .event-meta { font-size: 0.78rem; color: #6b7b8d; margin-top: 2px; }
+  .event-tag {
+    display: inline-block; font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 7px;
+    border-radius: 4px; margin-top: 4px;
+  }
+  .tag-sponsor { background: #dbeafe; color: var(--blue); }
+  .tag-speaker { background: #fce7c8; color: #9a6400; }
+  .tag-roundtable { background: #ede5f7; color: #6b3fa0; }
+  .tag-social { background: #fef3c7; color: #92600a; }
+  .tag-meal { background: #d1fae5; color: #166534; }
+  .tag-debrief { background: #e0f2fe; color: #0369a1; }
+  .tag-slalom { background: #e0f7fa; color: #0097a7; }
+  .tag-hackathon { background: #fce4ec; color: #c62828; }
+  .tag-demo { background: #f3e5f5; color: #7b1fa2; }
+
+  .venue-link {
+    color: var(--blue); text-decoration: none; font-weight: 600;
+  }
+  .venue-link:hover { text-decoration: underline; }
+
+  .now-badge {
+    position: absolute; top: 6px; right: 8px;
+    font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+    background: #f59e0b; color: white; padding: 2px 6px; border-radius: 4px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+  /* Clickable event */
+  .event.clickable { cursor: pointer; }
+  .event.clickable .event-title { color: var(--blue); text-decoration: underline; text-decoration-color: transparent; transition: text-decoration-color 0.2s; }
+  .event.clickable:hover .event-title { text-decoration-color: var(--blue); }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 14px; max-width: 640px; width: 100%;
+    max-height: 85vh; overflow-y: auto; padding: 2rem; position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .modal-close {
+    position: absolute; top: 12px; right: 14px; border: none; background: none;
+    font-size: 1.5rem; cursor: pointer; color: #6b7b8d; line-height: 1;
+  }
+  .modal-close:hover { color: var(--navy); }
+  .modal h2 { font-size: 1.2rem; color: var(--navy); margin-bottom: 0.3rem; }
+  .modal h3 { font-size: 1rem; color: var(--navy); margin: 1.2rem 0 0.4rem; }
+  .modal p, .modal li { font-size: 0.88rem; line-height: 1.7; color: #374151; }
+  .modal ul, .modal ol { padding-left: 1.3rem; }
+  .modal li { margin-bottom: 0.3rem; }
+  .modal code { background: #f1f5f9; padding: 1px 5px; border-radius: 3px; font-size: 0.82rem; }
+
+  /* Sponsor bio in modal */
+  .bio-card {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    padding: 0.7rem; background: #f8fafc; border-radius: 8px; margin-bottom: 0.5rem;
+  }
+  .bio-avatar {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.75rem; color: white;
+  }
+  .bio-info { min-width: 0; }
+  .bio-name { font-weight: 600; font-size: 0.88rem; }
+  a.bio-name { color: var(--navy); text-decoration: none; display: block; }
+  a.bio-name:hover { color: var(--blue); text-decoration: underline; }
+  .bio-role { font-size: 0.75rem; color: #6b7b8d; }
+  .bio-desc { font-size: 0.8rem; color: #4b5563; margin-top: 0.3rem; line-height: 1.5; }
+
+  /* Attendee cards */
+  .attendee-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.5rem;
+  }
+  .attendee-card {
+    display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0.9rem;
+    background: var(--white); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: transform 0.15s; text-decoration: none; color: inherit; cursor: pointer;
+  }
+  .attendee-card:hover { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--navy));
+    color: var(--white); display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.75rem; flex-shrink: 0;
+  }
+  .avatar-img {
+    width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+  }
+  .attendee-info { min-width: 0; }
+  .attendee-name { font-weight: 600; font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .attendee-company { font-size: 0.75rem; color: #6b7b8d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .attendee-location { font-size: 0.7rem; color: #9ca3af; }
+  .attendee-badges { display: flex; gap: 4px; margin-top: 2px; }
+  .badge { font-size: 0.6rem; padding: 1px 5px; border-radius: 3px; font-weight: 600; }
+  .badge-committee { background: var(--navy); color: var(--white); }
+  .badge-firsttime { background: #fef3c7; color: #92600a; }
+  .email-hint { font-size: 0.65rem; color: var(--teal); margin-top: 2px; }
+  .attendee-card.highlight {
+    outline: 2px solid #f59e0b; background: #fffbeb;
+    animation: highlight-fade 3s ease-out forwards;
+  }
+  @keyframes highlight-fade { 0% { outline-color: #f59e0b; background: #fffbeb; } 100% { outline-color: transparent; background: var(--white); } }
+
+  .result-count { font-size: 0.85rem; color: #6b7b8d; margin-bottom: 1rem; }
+
+  /* Sponsor cards */
+  .sponsor-card {
+    background: var(--white); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-left: 5px solid var(--blue);
+    cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .sponsor-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .sponsor-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+  .sponsor-logo {
+    width: 56px; height: 56px; border-radius: 10px; display: flex;
+    align-items: center; justify-content: center; font-weight: 800;
+    font-size: 0.6rem; color: white; flex-shrink: 0; text-align: center; line-height: 1.1;
+  }
+  .sponsor-logo-img {
+    width: 56px; height: 56px; border-radius: 10px; object-fit: contain;
+    flex-shrink: 0; background: white; padding: 4px;
+  }
+  .bio-headshot {
+    width: 48px; height: 48px; border-radius: 50%; object-fit: cover;
+    flex-shrink: 0;
+  }
+  .sponsor-title-block { flex: 1; }
+  .sponsor-name { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+  .sponsor-session-title { font-size: 0.82rem; color: #6b7b8d; margin-top: 2px; }
+  .sponsor-schedule { font-size: 0.78rem; color: var(--blue); margin-top: 2px; font-weight: 600; }
+  .sponsor-desc { font-size: 0.85rem; color: #374151; line-height: 1.6; }
+  .sponsor-extras { margin-top: 0.5rem; }
+  .sponsor-email { margin-top: 0.5rem; font-size: 0.78rem; }
+  .sponsor-email a { color: var(--teal); text-decoration: none; font-weight: 600; }
+  .sponsor-email a:hover { text-decoration: underline; }
+  .sponsor-extra-tag {
+    display: inline-block; font-size: 0.7rem; font-weight: 600;
+    padding: 3px 8px; border-radius: 4px; margin-right: 0.3rem;
+  }
+
+  /* Info sections */
+  .info-section {
+    background: var(--white); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .info-section h3 { color: var(--navy); margin-bottom: 0.5rem; font-size: 1.05rem; }
+  .info-section p, .info-section li { font-size: 0.9rem; line-height: 1.6; color: #374151; }
+  .info-section ul { padding-left: 1.2rem; }
+  .info-section li { margin-bottom: 0.3rem; }
+  .planning-committee { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+  .committee-chip {
+    background: var(--cyan-light); color: var(--navy);
+    padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: background 0.2s, transform 0.15s;
+  }
+  .committee-chip:hover { background: #b4e5eb; transform: translateY(-1px); }
+
+  /* Search results section headers */
+  .search-section-header {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--teal); margin: 1.2rem 0 0.5rem; padding-bottom: 0.3rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .search-section-header:first-child { margin-top: 0; }
+  .no-results { text-align: center; padding: 3rem 1rem; color: #6b7b8d; font-size: 0.95rem; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .header { padding: 1.5rem 1rem 1.5rem; }
+    .header-logo { max-width: 220px; width: 60%; }
+    .header .venue { font-size: 0.75rem; }
+    .nav button { padding: 0.55rem 0.7rem; font-size: 0.78rem; }
+    .global-search { padding: 0.4rem 0.75rem; }
+    .event { flex-direction: column; gap: 0.3rem; }
+    .event-time { min-width: unset; }
+    .event-title { font-size: 0.88rem; }
+    .attendee-grid { grid-template-columns: 1fr; }
+    .modal { padding: 1.2rem; border-radius: 10px; }
+    .sponsor-card { padding: 1rem; }
+    .sponsor-header { gap: 0.7rem; }
+    .sponsor-logo { width: 44px; height: 44px; font-size: 0.55rem; }
+    .sponsor-logo-img { width: 44px; height: 44px; }
+    .bio-headshot { width: 40px; height: 40px; }
+    .sponsor-name { font-size: 0.95rem; }
+    .bio-card { flex-direction: column; gap: 0.4rem; }
+  }
+
+  /* Cat Mode */
+  body.cat-mode {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E🐾%3C/text%3E%3C/svg%3E") 12 12, auto;
+    background: repeating-linear-gradient(45deg, #fff0f5, #fff0f5 20px, #ffe4e1 20px, #ffe4e1 40px) !important;
+  }
+  body.cat-mode .header {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 40%, #8b008b 100%);
+    animation: header-rainbow 3s ease infinite;
+    background-size: 200% 200%;
+  }
+  @keyframes header-rainbow {
+    0%,100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  body.cat-mode .header::before { background: #fff0f5; }
+  body.cat-mode .header-logo { animation: cat-wiggle 0.5s ease infinite; }
+  @keyframes cat-wiggle {
+    0%,100% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg) scale(1.02); }
+    75% { transform: rotate(3deg) scale(1.02); }
+  }
+  body.cat-mode .nav-wrapper { background: #fff0f5; }
+  body.cat-mode .nav { border-bottom-color: #ff69b4; }
+  body.cat-mode .nav button.active { border-bottom-color: #8b008b; background: #ffe4e1; color: #8b008b; }
+  body.cat-mode .nav button { color: #c71585; }
+  body.cat-mode .global-search { background: #fff0f5; }
+  body.cat-mode .day-header { border-bottom-color: #ff69b4; color: #8b008b; }
+  body.cat-mode .event {
+    border-left-color: #ff69b4;
+    animation: cat-card-bounce 2s ease infinite;
+  }
+  body.cat-mode .event:nth-child(odd) { animation-delay: 0.3s; }
+  @keyframes cat-card-bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+  }
+  body.cat-mode .event.sponsor { border-left-color: #c71585; }
+  body.cat-mode .event.social { border-left-color: #ffa500; }
+  body.cat-mode .event.meal { border-left-color: #ff6347; background: #fff5f5; }
+  body.cat-mode .event.roundtable { border-left-color: #da70d6; }
+  body.cat-mode .event.slalom { border-left-color: #ff1493; }
+  body.cat-mode .avatar {
+    background: linear-gradient(135deg, #ff69b4, #8b008b);
+    animation: avatar-spin 4s linear infinite;
+  }
+  @keyframes avatar-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  body.cat-mode .avatar-img {
+    border: 3px solid #ff69b4;
+    border-radius: 50%;
+    animation: avatar-spin 4s linear infinite;
+  }
+  body.cat-mode .sponsor-card {
+    border-left-color: #ff69b4;
+    background: linear-gradient(135deg, #fff0f5, #fff8fa);
+  }
+  body.cat-mode .sponsor-logo, body.cat-mode .sponsor-logo-img {
+    animation: cat-wiggle 1s ease infinite;
+  }
+  body.cat-mode .committee-chip { background: #ffe4e1; }
+  body.cat-mode .badge-committee { background: #8b008b; }
+  body.cat-mode .info-section { background: #fff0f5; border: 2px dashed #ff69b4; }
+  body.cat-mode .event-tag { animation: tag-blink 1s ease infinite alternate; }
+  @keyframes tag-blink { from { opacity: 1; } to { opacity: 0.5; } }
+
+  /* Cat banner */
+  .cat-banner {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: linear-gradient(90deg, #ff1493, #ff69b4, #ffa500, #ff1493);
+    background-size: 300% 100%;
+    animation: cat-banner-scroll 2s linear infinite;
+    color: white; text-align: center; font-weight: 800; font-size: 1.1rem;
+    padding: 0.4rem; z-index: 500; letter-spacing: 2px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  @keyframes cat-banner-scroll { 0% { background-position: 0% 0%; } 100% { background-position: 300% 0%; } }
+
+  /* Walking cat */
+  .walking-cat {
+    position: fixed; bottom: 0; font-size: 3rem; z-index: 400;
+    animation: cat-walk 8s linear infinite; pointer-events: none;
+  }
+  @keyframes cat-walk {
+    0% { left: -60px; transform: scaleX(-1); }
+    49% { left: calc(100vw + 10px); transform: scaleX(-1); }
+    50% { left: calc(100vw + 10px); transform: scaleX(1); }
+    99% { left: -60px; transform: scaleX(1); }
+    100% { left: -60px; transform: scaleX(-1); }
+  }
+
+  /* Raining cats */
+  .cat-rain {
+    position: fixed; top: -40px; font-size: 1.5rem; z-index: 150;
+    pointer-events: none; opacity: 0.7;
+    animation: rain-fall linear infinite;
+  }
+  @keyframes rain-fall {
+    0% { top: -40px; opacity: 0.7; }
+    100% { top: 110vh; opacity: 0; }
+  }
+
+  .cat-toast {
+    position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, #8b008b, #ff1493); color: white;
+    padding: 1rem 2rem; border-radius: 30px;
+    font-size: 1.2rem; font-weight: 800; z-index: 500;
+    animation: toast-in 0.4s ease-out, toast-out 0.4s 2.5s ease-in forwards;
+    box-shadow: 0 6px 25px rgba(139,0,139,0.5);
+    white-space: nowrap;
+  }
+  @keyframes toast-in { from { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.8); } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } }
+  @keyframes toast-out { from { opacity: 1; } to { opacity: 0; } }
+
+  .cat-float {
+    position: fixed; font-size: 2.5rem; pointer-events: none; z-index: 250;
+    animation: cat-rise 2.5s ease-out forwards;
+  }
+  @keyframes cat-rise {
+    0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+    50% { transform: translateY(-100px) rotate(180deg) scale(1.3); }
+    100% { opacity: 0; transform: translateY(-300px) rotate(360deg) scale(0.5); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <img src="VCPEIT_26_horizontal.png" alt="VCPEIT Honolulu 2026" class="header-logo" onclick="toggleCatMode()">
+  <div class="venue" id="venue-text">March 30 - April 2 &middot; Hilton Hawaiian Village Waikiki Beach Resort</div>
+</div>
+
+<div class="nav-wrapper">
+  <div class="global-search">
+    <input type="text" id="global-search" placeholder="Search agenda, attendees, sponsors..." oninput="globalSearch(this.value)">
+  </div>
+  <div class="nav" id="main-nav">
+    <button class="active" onclick="showTab('schedule')">Schedule</button>
+    <button onclick="showTab('attendees')">Attendees</button>
+    <button onclick="showTab('sponsors')">Sponsors</button>
+    <button onclick="showTab('info')">Info</button>
+    <button onclick="showTab('map')">Map</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- SEARCH RESULTS -->
+  <div id="search-results" class="tab"></div>
+
+  <!-- SCHEDULE TAB -->
+  <div id="schedule" class="tab active">
+
+    <div class="day-header" data-date="2026-03-30">Monday, March 30</div>
+    <div class="event social" data-datetime="2026-03-30T18:00">
+      <div class="event-time">6:00 PM</div>
+      <div class="event-details">
+        <div class="event-title">Welcome Reception</div>
+        <div class="event-meta">Rainbow Suite / Patio</div>
+        <span class="event-tag tag-social">Social</span>
+      </div>
+    </div>
+    <div class="event social clickable" data-datetime="2026-03-30T21:00" onclick="openModal('serval-modal')">
+      <div class="event-time">9:00 PM</div>
+      <div class="event-details">
+        <div class="event-title">Optional After Party &mdash; Sponsored by Serval</div>
+        <div class="event-meta">Tapa Bar</div>
+        <span class="event-tag tag-social">Social</span>
+      </div>
+    </div>
+
+    <div class="day-header" data-date="2026-03-31">Tuesday, March 31</div>
+    <div class="event meal" data-datetime="2026-03-31T08:00">
+      <div class="event-time">8:00 AM</div>
+      <div class="event-details">
+        <div class="event-title">Breakfast</div>
+        <div class="event-meta">Rooftop</div>
+        <span class="event-tag tag-meal">Meal</span>
+      </div>
+    </div>
+    <div class="event" data-datetime="2026-03-31T08:45">
+      <div class="event-time">8:45 AM</div>
+      <div class="event-details">
+        <div class="event-title">Conference Introduction &amp; Welcome</div>
+        <div class="event-meta">South Pacific 1/2</div>
+      </div>
+    </div>
+    <div class="event sponsor clickable" data-datetime="2026-03-31T09:00" onclick="openModal('serval-modal')">
+      <div class="event-time">9:00 AM</div>
+      <div class="event-details">
+        <div class="event-title">Agentic AI for IT Service Management &mdash; Serval</div>
+        <div class="event-meta">South Pacific 1/2 &middot; Tap for details</div>
+        <span class="event-tag tag-sponsor">Sponsor</span>
+      </div>
+    </div>
+    <div class="event sponsor clickable" data-datetime="2026-03-31T10:00" onclick="openModal('harmonic-modal')">
+      <div class="event-time">10:00 AM</div>
+      <div class="event-details">
+        <div class="event-title">AI Sourcing &mdash; The Startup Discovery Engine &mdash; Harmonic</div>
+        <div class="event-meta">South Pacific 1/2 &middot; Tap for details</div>
+        <span class="event-tag tag-sponsor">Sponsor</span>
+      </div>
+    </div>
+    <div class="event" data-datetime="2026-03-31T11:00">
+      <div class="event-time">11:00 AM</div>
+      <div class="event-details"><div class="event-title">Break</div></div>
+    </div>
+    <div class="event clickable" data-datetime="2026-03-31T11:15" onclick="openModal('chrisyeh-modal')">
+      <div class="event-time">11:15 AM</div>
+      <div class="event-details">
+        <div class="event-title">Investor, Entrepreneur and Author of Blitzscaling &mdash; Chris Yeh</div>
+        <div class="event-meta">South Pacific 1/2 &middot; Tap for bio</div>
+        <span class="event-tag tag-speaker">Speaker</span>
+      </div>
+    </div>
+    <div class="event meal" data-datetime="2026-03-31T12:00">
+      <div class="event-time">12:00 PM</div>
+      <div class="event-details">
+        <div class="event-title">Lunch</div>
+        <div class="event-meta">South Pacific 3</div>
+        <span class="event-tag tag-meal">Meal</span>
+      </div>
+    </div>
+    <div class="event slalom clickable" data-datetime="2026-03-31T13:00" onclick="openModal('slalom-modal')">
+      <div class="event-time">1:00 PM</div>
+      <div class="event-details">
+        <div class="event-title">Live Training: Building with AI for VC/PE &mdash; Slalom</div>
+        <div class="event-meta">South Pacific 1/2 &middot; Tap for prep guide &amp; speaker bios</div>
+        <span class="event-tag tag-slalom">Slalom Training</span>
+      </div>
+    </div>
+    <div class="event slalom" data-datetime="2026-03-31T14:00">
+      <div class="event-time">2:00 PM</div>
+      <div class="event-details">
+        <div class="event-title">Live Hackathon: Vibe Coding with Claude Code</div>
+        <div class="event-meta">South Pacific 1/2</div>
+        <span class="event-tag tag-hackathon">Hackathon</span>
+      </div>
+    </div>
+    <div class="event" data-datetime="2026-03-31T16:00">
+      <div class="event-time">4:00 PM</div>
+      <div class="event-details">
+        <div class="event-title">Member Show and Tell &mdash; Live Demos (15 min each)</div>
+        <div class="event-meta">South Pacific 1/2</div>
+        <span class="event-tag tag-demo">Demo</span>
+      </div>
+    </div>
+    <div class="event social" data-datetime="2026-03-31T16:30">
+      <div class="event-time">4:30 PM</div>
+      <div class="event-details">
+        <div class="event-title">Networking Reception</div>
+        <div class="event-meta">Poolside Cabana</div>
+        <span class="event-tag tag-social">Social</span>
+      </div>
+    </div>
+    <div class="event" data-datetime="2026-03-31T17:30">
+      <div class="event-time">5:30 PM</div>
+      <div class="event-details"><div class="event-title">Break / Free Time</div></div>
+    </div>
+    <div class="event social" data-datetime="2026-03-31T18:30">
+      <div class="event-time">6:30 PM</div>
+      <div class="event-details">
+        <div class="event-title">Luau &mdash; Sponsored by Adaptive Security</div>
+        <div class="event-meta">Village Green</div>
+        <span class="event-tag tag-social">Social</span>
+      </div>
+    </div>
+    <div class="event social" data-datetime="2026-03-31T21:30">
+      <div class="event-time">9:30 PM</div>
+      <div class="event-details">
+        <div class="event-title">Optional After Party</div>
+        <div class="event-meta">TBD</div>
+        <span class="event-tag tag-social">Social</span>
+      </div>
+    </div>
+
+    <div class="day-header" data-date="2026-04-01">Wednesday, April 1</div>
+    <div class="event meal" data-datetime="2026-04-01T08:00">
+      <div class="event-time">8:00 AM</div>
+      <div class="event-details">
+        <div class="event-title">Breakfast</div>
+        <div class="event-meta">Rooftop</div>
+        <span class="event-tag tag-meal">Meal</span>
+      </div>
+    </div>
+    <div class="event sponsor clickable" data-datetime="2026-04-01T08:45" onclick="openModal('portal26-modal')">
+      <div class="event-time">8:45 AM</div>
+      <div class="event-details">
+        <div class="event-title">Securing, Governing &amp; Optimizing GenAI &mdash; Portal26</div>
+        <div class="event-meta">South Pacific 1/2 &middot; Tap for details</div>
+        <span class="event-tag tag-sponsor">Sponsor</span>
+      </div>
+    </div>
+    <div class="event" data-datetime="2026-04-01T09:45">
+      <div class="event-time">9:45 AM</div>
+      <div class="event-details">
+        <div class="event-title">Member Show and Tell &mdash; Live Demo (15 min)</div>
+        <div class="event-meta">South Pacific 1/2</div>
+        <span class="event-tag tag-demo">Demo</span>
+      </div>
+    </div>
+    <div class="event clickable" data-datetime="2026-04-01T10:00" onclick="openModal('alexis-modal')">
+      <div class="event-time">10:00 AM</div>
+      <div class="event-details">
+        <div class="event-title">Standing Out in a Virtual World &mdash; Building Your Brand &mdash; Alexis Bertholf</div>
+        <div class="event-meta">South Pacific 1/2 &middot; Tap for bio</div>
+        <span class="event-tag tag-speaker">Speaker</span>
+      </div>
+    </div>
+    <div class="event roundtable" data-datetime="2026-04-01T11:00">
+      <div class="event-time">11:00 AM</div>
+      <div class="event-details">
+        <div class="event-title">Roundtable: From Operator to Strategic Partner &mdash; Redefining the Tech Leader's Role in VC/PE</div>
+        <div class="event-meta">South Pacific 1/2</div>
+        <span class="event-tag tag-roundtable">Roundtable</span>
+      </div>
+    </div>
+    <div class="event meal" data-datetime="2026-04-01T11:45">
+      <div class="event-time">11:45 AM</div>
+      <div class="event-details">
+        <div class="event-title">Lunch &amp; Morning Debrief</div>
+        <div class="event-meta">South Pacific 1/2</div>
+        <span class="event-tag tag-meal">Meal</span>
+      </div>
+    </div>
+    <div class="event social" data-datetime="2026-04-01T13:00">
+      <div class="event-time">1:00 PM</div>
+      <div class="event-details">
+        <div class="event-title">Transportation to Networking Activity</div>
+        <div class="event-meta">Meet in Lobby</div>
+        <span class="event-tag tag-social">Social</span>
+      </div>
+    </div>
+    <div class="event social clickable" data-datetime="2026-04-01T13:30" onclick="window.open('https://maps.apple.com/?q=Kewalo+Basin+Harbor+Honolulu','_blank')">
+      <div class="event-time">1:30 PM</div>
+      <div class="event-details">
+        <div class="event-title">Networking Activity &mdash; Boat Cruise</div>
+        <div class="event-meta">Kewalo Basin Harbor &middot; Tap for directions</div>
+        <span class="event-tag tag-social">Social</span>
+      </div>
+    </div>
+    <div class="event" data-datetime="2026-04-01T17:00">
+      <div class="event-time">5:00 PM</div>
+      <div class="event-details"><div class="event-title">Break / Free Time</div></div>
+    </div>
+    <div class="event social" data-datetime="2026-04-01T18:15">
+      <div class="event-time">6:15 PM</div>
+      <div class="event-details">
+        <div class="event-title">Walk to Dinner</div>
+        <div class="event-meta">Meet in Lobby</div>
+      </div>
+    </div>
+    <div class="event social clickable" data-datetime="2026-04-01T18:30" onclick="window.open('https://maps.apple.com/?q=Tommy+Bahama+Restaurant+Waikiki+Honolulu','_blank')">
+      <div class="event-time">6:30 PM</div>
+      <div class="event-details">
+        <div class="event-title">Networking Reception &amp; Dinner</div>
+        <div class="event-meta">Tommy Bahama &middot; Tap for directions</div>
+        <span class="event-tag tag-social">Social</span>
+      </div>
+    </div>
+    <div class="event social clickable" data-datetime="2026-04-01T21:30" onclick="openModal('oneitz-modal')">
+      <div class="event-time">9:30 PM</div>
+      <div class="event-details">
+        <div class="event-title">Optional After Party &mdash; Sponsored by OneITZ</div>
+        <div class="event-meta">Rooftop</div>
+        <span class="event-tag tag-social">Social</span>
+      </div>
+    </div>
+
+    <div class="day-header" data-date="2026-04-02">Thursday, April 2</div>
+    <div class="event meal" data-datetime="2026-04-02T08:00">
+      <div class="event-time">8:00 AM</div>
+      <div class="event-details">
+        <div class="event-title">Breakfast</div>
+        <div class="event-meta">Rooftop</div>
+        <span class="event-tag tag-meal">Meal</span>
+      </div>
+    </div>
+    <div class="event sponsor clickable" data-datetime="2026-04-02T09:00" onclick="openModal('oneitz-modal')">
+      <div class="event-time">9:00 AM</div>
+      <div class="event-details">
+        <div class="event-title">Cybersecurity in the AI Era &mdash; OneITz</div>
+        <div class="event-meta">South Pacific 1/2 &middot; Tap for details</div>
+        <span class="event-tag tag-sponsor">Sponsor</span>
+      </div>
+    </div>
+    <div class="event sponsor clickable" data-datetime="2026-04-02T09:30" onclick="openModal('wolf-modal')">
+      <div class="event-time">9:30 AM</div>
+      <div class="event-details">
+        <div class="event-title">Data First Decision Making Without Sacrificing Compliance &mdash; Wolf &amp; Company</div>
+        <div class="event-meta">South Pacific 1/2 &middot; Tap for details</div>
+        <span class="event-tag tag-sponsor">Sponsor</span>
+      </div>
+    </div>
+    <div class="event" data-datetime="2026-04-02T10:30">
+      <div class="event-time">10:30 AM</div>
+      <div class="event-details">
+        <div class="event-title">Member Show and Tell &mdash; Live Demos (15 min each)</div>
+        <div class="event-meta">South Pacific 1/2</div>
+        <span class="event-tag tag-demo">Demo</span>
+      </div>
+    </div>
+    <div class="event roundtable clickable" data-datetime="2026-04-02T11:00" onclick="openModal('luke-modal')">
+      <div class="event-time">11:00 AM</div>
+      <div class="event-details">
+        <div class="event-title">Roundtable: Governing AI at Scale &mdash; Policy, Risk and Responsible Adoption</div>
+        <div class="event-meta">South Pacific 1/2 &middot; Led by Luke Shoberg &middot; Tap for bio</div>
+        <span class="event-tag tag-roundtable">Roundtable</span>
+      </div>
+    </div>
+    <div class="event" data-datetime="2026-04-02T12:00">
+      <div class="event-time">12:00 PM</div>
+      <div class="event-details">
+        <div class="event-title">Conference Conclusion &amp; Debrief</div>
+        <div class="event-meta">South Pacific 1/2</div>
+        <span class="event-tag tag-debrief">Debrief</span>
+      </div>
+    </div>
+    <div class="event meal" data-datetime="2026-04-02T12:30">
+      <div class="event-time">12:30 PM</div>
+      <div class="event-details">
+        <div class="event-title">Lunch</div>
+        <div class="event-meta">South Pacific 3</div>
+        <span class="event-tag tag-meal">Meal</span>
+      </div>
+    </div>
+    <div class="event social clickable" data-datetime="2026-04-02T18:00" onclick="window.open('https://maps.apple.com/?q=Monkeypod+Kitchen+Ko+Olina+Hawaii','_blank')">
+      <div class="event-time">6:00 PM</div>
+      <div class="event-details">
+        <div class="event-title">Closing Dinner (Attendees Only &mdash; No Sponsors)</div>
+        <div class="event-meta">Monkey Pod &middot; Tap for directions</div>
+        <span class="event-tag tag-social">Social</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTENDEES TAB -->
+  <div id="attendees" class="tab">
+    <div class="result-count" id="attendee-count"></div>
+    <div class="attendee-grid" id="attendee-grid"></div>
+  </div>
+
+  <!-- SPONSORS TAB -->
+  <div id="sponsors" class="tab">
+
+    <div class="sponsor-card" style="border-left-color: #1a1a1a;" onclick="openModal('serval-modal')">
+      <div class="sponsor-header">
+        <img class="sponsor-logo-img" src="Headshots %26 Bios/Serval/Serval_PNG_File-01.png" alt="Serval">
+        <div class="sponsor-title-block">
+          <div class="sponsor-name">Serval</div>
+          <div class="sponsor-session-title">Agentic AI for IT Service Management</div>
+          <div class="sponsor-schedule">Tue Mar 31, 9:00 AM &middot; South Pacific 1/2</div>
+        </div>
+      </div>
+      <div class="sponsor-desc">Serval deploys AI agents for IT. Companies from the F500 to innovators like Perplexity, Notion, and Clay use Serval to automate help desk tickets, access requests, and onboarding/offboarding flows.</div>
+      <div class="sponsor-extras">
+        <span class="sponsor-extra-tag" style="background:#fef3c7;color:#92600a;">After Party Host (Mon)</span>
+      </div>
+      <div class="sponsor-email"><a href="mailto:sales@serval.com" onclick="event.stopPropagation()">sales@serval.com</a></div>
+    </div>
+
+    <div class="sponsor-card" style="border-left-color: #e8573a;" onclick="openModal('harmonic-modal')">
+      <div class="sponsor-header">
+        <img class="sponsor-logo-img" src="Headshots %26 Bios/Harmonic/harmonic_logo_rgb_fc_p %2814%29.png" alt="Harmonic">
+        <div class="sponsor-title-block">
+          <div class="sponsor-name">Harmonic</div>
+          <div class="sponsor-session-title">AI Sourcing &mdash; The Startup Discovery Engine</div>
+          <div class="sponsor-schedule">Tue Mar 31, 10:00 AM &middot; South Pacific 1/2</div>
+        </div>
+      </div>
+      <div class="sponsor-desc">The source of truth about startups. Proprietary data on millions of companies, team, traction and funding, multiplied by AI that automates your workflow from discovery to decision.</div>
+      <div class="sponsor-email"><a href="mailto:hello@harmonic.ai" onclick="event.stopPropagation()">hello@harmonic.ai</a></div>
+    </div>
+
+    <div class="sponsor-card" style="border-left-color: #2563eb;" onclick="openModal('slalom-modal')">
+      <div class="sponsor-header">
+        <img class="sponsor-logo-img" src="Headshots %26 Bios/Slalom/Slalom_Consulting_Logo.svg.png" alt="Slalom">
+        <div class="sponsor-title-block">
+          <div class="sponsor-name">Slalom</div>
+          <div class="sponsor-session-title">Live Training: Building with AI for VC/PE + Hackathon</div>
+          <div class="sponsor-schedule">Tue Mar 31, 1:00 PM &middot; South Pacific 1/2</div>
+        </div>
+      </div>
+      <div class="sponsor-desc">Hands-on AI training and live hackathon session with Claude Cowork. Tap for prep guide and speaker bios.</div>
+      <div class="sponsor-email"><a href="mailto:hello@slalom.com" onclick="event.stopPropagation()">hello@slalom.com</a></div>
+    </div>
+
+    <div class="sponsor-card" style="border-left-color: #059669;">
+      <div class="sponsor-header">
+        <div class="sponsor-logo" style="background: linear-gradient(135deg, #059669, #10b981);">Adaptive<br>Security</div>
+        <div class="sponsor-title-block">
+          <div class="sponsor-name">Adaptive Security</div>
+          <div class="sponsor-session-title">Luau Sponsor</div>
+          <div class="sponsor-schedule">Tue Mar 31, 6:30 PM &middot; Village Green</div>
+        </div>
+      </div>
+      <div class="sponsor-desc">Sponsoring the Tuesday evening luau at the Village Green.</div>
+      <div class="sponsor-email"><a href="mailto:info@adaptivesecurity.com" onclick="event.stopPropagation()">info@adaptivesecurity.com</a></div>
+    </div>
+
+    <div class="sponsor-card" style="border-left-color: #7c3aed;" onclick="openModal('portal26-modal')">
+      <div class="sponsor-header">
+        <div class="sponsor-logo" style="background: linear-gradient(135deg, #7c3aed, #a78bfa);">Portal26</div>
+        <div class="sponsor-title-block">
+          <div class="sponsor-name">Portal26</div>
+          <div class="sponsor-session-title">Securing, Governing &amp; Optimizing GenAI</div>
+          <div class="sponsor-schedule">Wed Apr 1, 8:45 AM &middot; South Pacific 1/2</div>
+        </div>
+      </div>
+      <div class="sponsor-desc">The GenAI adoption management platform trusted by enterprises to bring visibility, control, and measurability to GenAI usage at scale.</div>
+      <div class="sponsor-email"><a href="mailto:info@portal26.ai" onclick="event.stopPropagation()">info@portal26.ai</a></div>
+    </div>
+
+    <div class="sponsor-card" style="border-left-color: #1a1a1a;" onclick="openModal('oneitz-modal')">
+      <div class="sponsor-header">
+        <img class="sponsor-logo-img" src="Headshots %26 Bios/OneITz/oneitz-logo-black.png" alt="OneITz">
+        <div class="sponsor-title-block">
+          <div class="sponsor-name">OneITz</div>
+          <div class="sponsor-session-title">Cybersecurity in the AI Era</div>
+          <div class="sponsor-schedule">Thu Apr 2, 9:00 AM &middot; South Pacific 1/2</div>
+        </div>
+      </div>
+      <div class="sponsor-desc">Proactive, cybersecurity-first IT services for financial services and life sciences. Founded on the belief that organizations deserve IT partners they can trust.</div>
+      <div class="sponsor-extras">
+        <span class="sponsor-extra-tag" style="background:#fef3c7;color:#92600a;">After Party Host (Wed)</span>
+      </div>
+      <div class="sponsor-email"><a href="mailto:info@oneitz.com" onclick="event.stopPropagation()">info@oneitz.com</a></div>
+    </div>
+
+    <div class="sponsor-card" style="border-left-color: #1e3a7a;" onclick="openModal('wolf-modal')">
+      <div class="sponsor-header">
+        <img class="sponsor-logo-img" src="Headshots %26 Bios/Wolf/Wolf-logo%20Primary%20Gradient%20RGB%20%281%29.jpg" alt="Wolf &amp; Company">
+        <div class="sponsor-title-block">
+          <div class="sponsor-name">Wolf &amp; Company, P.C.</div>
+          <div class="sponsor-session-title">Data First Decision Making Without Sacrificing Compliance</div>
+          <div class="sponsor-schedule">Thu Apr 2, 9:30 AM &middot; South Pacific 1/2</div>
+        </div>
+      </div>
+      <div class="sponsor-desc">Leading CPA and advisory firm since 1911, serving over 400 financial institutions and fintech organizations with public accounting, risk management, and data-driven consulting.</div>
+      <div class="sponsor-email"><a href="mailto:info@wolfandco.com" onclick="event.stopPropagation()">info@wolfandco.com</a></div>
+    </div>
+
+  </div>
+
+  <!-- INFO TAB -->
+  <div id="info" class="tab">
+    <div class="info-section">
+      <h3>About VCPEIT</h3>
+      <p>VCPEIT's annual conference is produced by and for senior and forward-thinking IT executives, CISOs, CIOs, and key decision makers from private equity, venture capital, family office, and leveraged buyout firms. Now in its 21st consecutive year.</p>
+    </div>
+    <div class="info-section">
+      <h3>Venue</h3>
+      <p>Hilton Hawaiian Village Waikiki Beach Resort, Honolulu, Hawaii</p>
+      <p style="margin-top:0.5rem;font-size:0.85rem;color:#6b7b8d;">Conference sessions in South Pacific 1/2 &middot; Breakfasts on the Rooftop &middot; Welcome reception at Rainbow Suite/Patio</p>
+    </div>
+    <div class="info-section">
+      <h3>Speakers</h3>
+      <ul>
+        <li><a href="#" onclick="event.preventDefault();openModal('chrisyeh-modal')" style="color:var(--blue);text-decoration:none;font-weight:600;">Chris Yeh</a> &mdash; Investor, Entrepreneur and Author of Blitzscaling</li>
+        <li><a href="#" onclick="event.preventDefault();openModal('alexis-modal')" style="color:var(--blue);text-decoration:none;font-weight:600;">Alexis Bertholf</a> &mdash; Standing Out in a Virtual World: Building Your Brand</li>
+        <li><a href="#" onclick="event.preventDefault();openModal('luke-modal')" style="color:var(--blue);text-decoration:none;font-weight:600;">Luke Shoberg</a> &mdash; Roundtable: Governing AI at Scale &mdash; Policy, Risk and Responsible Adoption</li>
+      </ul>
+    </div>
+    <div class="info-section">
+      <h3>Planning Committee</h3>
+      <div class="planning-committee">
+        <a class="committee-chip" onclick="goToAttendee('Kerry Buckley')">Kerry Buckley</a>
+        <a class="committee-chip" onclick="goToAttendee('Michael DeCaro')">Michael DeCaro</a>
+        <a class="committee-chip" onclick="goToAttendee('Ryan Donnon')">Ryan Donnon</a>
+        <a class="committee-chip" onclick="goToAttendee('Leo Fitzpatrick')">Leo Fitzpatrick</a>
+        <a class="committee-chip" onclick="goToAttendee('Ivan Flores')">Ivan Flores</a>
+        <a class="committee-chip" onclick="goToAttendee('Edward Ho')">Ed Ho</a>
+        <a class="committee-chip" onclick="goToAttendee('Joshua Kirkes')">Joshua Kirkes</a>
+        <a class="committee-chip" onclick="goToAttendee('Matt Penney')">Matt Penney</a>
+      </div>
+    </div>
+    <div class="info-section">
+      <h3>All times Hawaii Standard Time (UTC-10)</h3>
+      <p>The schedule auto-scrolls to the current or next session based on your device time.</p>
+    </div>
+  </div>
+
+  <!-- MAP TAB -->
+  <div id="map" class="tab">
+    <div class="info-section">
+      <h3>Hilton Hawaiian Village Resort Map</h3>
+      <p style="margin-bottom:0.75rem;">Tap the map to zoom. Conference sessions are in <strong>South Pacific 1/2</strong> in the Tapa Tower.</p>
+      <a href="https://hiltonhawaiianvillage.com/resort-map/" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:1rem;font-size:0.85rem;color:var(--blue);font-weight:600;">View interactive resort map &rarr;</a>
+      <img src="resort-map.png" alt="Hilton Hawaiian Village Resort Map" style="width:100%;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);cursor:zoom-in;" onclick="openMapZoom(this.src)">
+    </div>
+    <div class="info-section">
+      <h3>Key Locations</h3>
+      <ul>
+        <li><strong>South Pacific 1/2</strong> &mdash; All sessions, roundtables, presentations (Tapa Tower)</li>
+        <li><strong>South Pacific 3</strong> &mdash; Select lunches</li>
+        <li><strong>Rooftop</strong> &mdash; Daily breakfasts</li>
+        <li><strong>Rainbow Suite / Patio</strong> &mdash; Monday Welcome Reception</li>
+        <li><strong>Poolside Cabana</strong> &mdash; Tuesday Networking Reception</li>
+        <li><strong>Village Green</strong> &mdash; Tuesday Luau</li>
+        <li><strong>Tapa Bar</strong> &mdash; Monday After Party</li>
+      </ul>
+    </div>
+    <div class="info-section">
+      <h3>Offsite Venues</h3>
+      <ul>
+        <li><a href="https://maps.apple.com/?q=Kewalo+Basin+Harbor+Honolulu" target="_blank" rel="noopener" class="venue-link"><strong>Kewalo Basin Harbor</strong> &rarr;</a> &mdash; Wednesday Boat Cruise (1:30 PM, meet in lobby)</li>
+        <li><a href="https://maps.apple.com/?q=Tommy+Bahama+Restaurant+Waikiki+Honolulu" target="_blank" rel="noopener" class="venue-link"><strong>Tommy Bahama</strong> &rarr;</a> &mdash; Wednesday Dinner (walk from lobby at 6:15 PM)</li>
+        <li><a href="https://maps.apple.com/?q=Monkeypod+Kitchen+Ko+Olina+Hawaii" target="_blank" rel="noopener" class="venue-link"><strong>Monkey Pod</strong> &rarr;</a> &mdash; Thursday Closing Dinner</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- MAP ZOOM OVERLAY -->
+<div class="modal-overlay" id="map-zoom" onclick="if(event.target===this)closeModal('map-zoom')">
+  <div class="modal" style="max-width:95vw;padding:0.5rem;background:transparent;box-shadow:none;">
+    <button class="modal-close" onclick="closeModal('map-zoom')" style="color:white;font-size:2rem;z-index:10;text-shadow:0 1px 4px rgba(0,0,0,0.8);">&times;</button>
+    <img id="map-zoom-img" src="" alt="Resort Map" style="width:100%;border-radius:8px;">
+  </div>
+</div>
+
+<!-- SLALOM MODAL -->
+<div class="modal-overlay" id="slalom-modal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('slalom-modal')">&times;</button>
+    <img src="Headshots %26 Bios/Slalom/Slalom_Consulting_Logo.svg.png" alt="Slalom" style="height:28px;margin-bottom:0.75rem;">
+    <h2>Live Training: Building with AI for VC/PE</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">Tuesday, March 31 &middot; 1:00 PM &middot; South Pacific 1/2 &middot; Presented by Slalom</p>
+
+    <h3>Session Team</h3>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Slalom/James%20Young%20Headshot.jpg" alt="James Young">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:james.young@slalom.com">James Young</a>
+        <div class="bio-role">Sr. Managing Director</div>
+        <div class="bio-desc">Northern California Market Leader at Slalom focused on helping clients achieve impactful business outcomes. He has helped organizations from emerging startups to the world's largest brands drive business and technology transformation. He also plays a key role in advancing Slalom's AI ecosystem and emerging technology capabilities.</div>
+      </div>
+    </div>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Slalom/Will%20Thieme%20Headshot.jpeg" alt="Will Thieme">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:will.thieme@slalom.com">Will Thieme</a>
+        <div class="bio-role">AI Solutions Lead</div>
+        <div class="bio-desc">AI strategy and delivery leader at Slalom who helps organizations turn frontier AI capabilities into practical, governed business outcomes. He works with executives and technical teams to shape AI strategy, design operating models, coach enterprise adoption, and build production-ready solutions across industries.</div>
+      </div>
+    </div>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Slalom/Amy%20Roberts%20Terry%20Headshot.jpg" alt="Amy Roberts Terry">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:amy.robertsterry@slalom.com">Amy Roberts Terry</a>
+        <div class="bio-role">Director, Adaptive Organizations &amp; Enablement</div>
+        <div class="bio-desc">AI enablement strategist at Slalom who helps organizations bridge the gap between AI investment and adoption. She specializes in designing AI enablement programs that move organizations beyond AI productivity, rethinking how work gets done differently with AI.</div>
+      </div>
+    </div>
+
+    <h3>Claude Cowork Prep Guide</h3>
+    <p><strong>Goal:</strong> Arrive with Claude Desktop installed, Cowork available, and a clean workshop folder ready for sample workshop files.</p>
+
+    <h3>What You Need</h3>
+    <ul>
+      <li>A paid Claude plan (Pro, Max, Team, or Enterprise)</li>
+      <li>The latest Claude Desktop app installed on your laptop</li>
+      <li>Permissions to manage available Claude features (if currently blocked)</li>
+    </ul>
+
+    <h3>5-Minute Setup</h3>
+    <ol>
+      <li>Install or update Claude Desktop from <code>claude.com/download</code></li>
+      <li>Open the app and sign in</li>
+      <li>Confirm you can see the <strong>Cowork</strong> tab near the top of the app</li>
+      <li>Open Cowork, then click <strong>Customize</strong> in the left sidebar</li>
+      <li>Confirm the Customize area opens and shows Customize Skills, Browse Plugins, and other related settings</li>
+      <li>Create a local folder for workshop materials (e.g., <code>vcpeit-cowork-workshop</code>)</li>
+    </ol>
+
+    <h3>If Something Is Missing</h3>
+    <ul>
+      <li>If the Cowork tab does not appear: you may need a supported paid plan, an admin enablement step on Team or Enterprise, or a current Claude Desktop version</li>
+      <li>If Customize is blocked or incomplete, check with your internal Claude admin</li>
+      <li>If your organization controls Skills separately, ask your admin to confirm code execution and file creation are enabled</li>
+    </ul>
+
+    <h3>Good To Know</h3>
+    <ul>
+      <li>Cowork runs in the desktop app, not the web app</li>
+      <li>Keep Claude Desktop open while Cowork is working</li>
+      <li>Sample materials will be used in the session &mdash; no need to preload real firm data</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SERVAL MODAL -->
+<div class="modal-overlay" id="serval-modal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('serval-modal')">&times;</button>
+    <img src="Headshots %26 Bios/Serval/Serval_PNG_File-01.png" alt="Serval" style="height:32px;margin-bottom:0.75rem;">
+    <h2>Agentic AI for IT Service Management</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">Tuesday, March 31 &middot; 9:00 AM &middot; South Pacific 1/2</p>
+    <p style="margin-top:1rem;">Serval deploys AI agents for IT. Companies from the F500 to innovators like Perplexity, Notion, Mercor, and Clay use Serval to automate help desk tickets, just-in-time access requests, and onboarding/offboarding flows. With Serval, IT teams can turn natural language prompts into complex automations in seconds, automating >80% of tickets on day one.</p>
+    <p style="margin-top:0.75rem;font-size:0.85rem;color:#6b7b8d;">Also hosting the <strong>Monday After Party</strong> at Tapa Bar (9:00 PM).</p>
+    <h3>Presenters</h3>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Serval/Danny%20Carlson.jpeg" alt="Danny Carlson">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:danny@serval.com">Danny Carlson</a>
+        <div class="bio-role">Head of Sales</div>
+        <div class="bio-desc">Over 15 years of leadership experience building and scaling elite GTM organizations at Box, Segment, and Retool, contributing to the rapid growth of category-defining SaaS companies.</div>
+      </div>
+    </div>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Serval/Chris%20Comes.png" alt="Chris Comes">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:chris@serval.com">Chris Comes</a>
+        <div class="bio-role">VP of Sales</div>
+        <div class="bio-desc">A decade at the center of the enterprise AI evolution. Cut his teeth during the rise of VoiceAI at Dialpad before helping scale Moveworks through its landmark $3B acquisition by ServiceNow.</div>
+      </div>
+    </div>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Serval/Hannah%20Wood.png" alt="Hannah Wood">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:hannah@serval.com">Hannah Wood</a>
+        <div class="bio-role">Product Marketing</div>
+        <div class="bio-desc">Leads product marketing at Serval. Previously built competitive positioning at Rippling during hypergrowth and started in Bain's PE practice.</div>
+      </div>
+    </div>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Serval/251211_Alan_TDK00154.jpg" alt="Alan">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:sales@serval.com">Alan Shreve</a>
+        <div class="bio-role">CEO &amp; Founder</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HARMONIC MODAL -->
+<div class="modal-overlay" id="harmonic-modal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('harmonic-modal')">&times;</button>
+    <img src="Headshots %26 Bios/Harmonic/harmonic_logo_rgb_fc_p %2814%29.png" alt="Harmonic" style="height:32px;margin-bottom:0.75rem;">
+    <h2>AI Sourcing &mdash; The Startup Discovery Engine</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">Tuesday, March 31 &middot; 10:00 AM &middot; South Pacific 1/2</p>
+    <p style="margin-top:1rem;">Harmonic is the source of truth about startups, helping customers discover opportunities earlier, research them faster, and act with confidence. Proprietary data on millions of companies, team, traction and funding, multiplied by AI that automates your workflow from discovery to decision.</p>
+    <h3>Presenters</h3>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Harmonic/Max%20Ruderman.png" alt="Max Ruderman">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:max@harmonic.ai">Max Ruderman</a>
+        <div class="bio-role">CEO</div>
+        <div class="bio-desc">Mapping private markets and building tools that help investors find and close their fund returners. Spent many years at Google before Harmonic doing data work. Outside of Harmonic, find Max mountain biking or doing jiu jitsu.</div>
+      </div>
+    </div>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Harmonic/Mike%20Palmer%20.png" alt="Mike Palmer">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:mike@harmonic.ai">Mike Palmer</a>
+        <div class="bio-role">Head of Sales</div>
+        <div class="bio-desc">Nearly 4 years at Harmonic, onboarding 650+ firms onto the product. Originally from Hawaii, he's excited to be back enjoying the week!</div>
+      </div>
+    </div>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Harmonic/Carter%20Headley%20.png" alt="Carter Headley">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:carter@harmonic.ai">Carter Headley</a>
+        <div class="bio-role">Head of Account Management</div>
+        <div class="bio-desc">Runs post-sales activation and customer-product feedback cycles. Prior decade as a consultant at LMI and IBM. Proud father of 3 young daughters who enjoys hitting the links, surfing, or hiking.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PORTAL26 MODAL -->
+<div class="modal-overlay" id="portal26-modal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('portal26-modal')">&times;</button>
+    <h2>Securing, Governing &amp; Optimizing GenAI</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">Wednesday, April 1 &middot; 8:45 AM &middot; South Pacific 1/2</p>
+    <p style="margin-top:1rem;">Portal26 is the GenAI adoption management platform trusted by enterprises to bring visibility, control, and measurability to GenAI usage at scale. Portal26 captures, retains, and analyzes every GenAI interaction &mdash; enabling security, compliance, and business teams to reduce risk while accelerating real adoption.</p>
+    <ul style="margin-top:0.75rem;">
+      <li>See how GenAI is actually being used &mdash; who's using it, for what, and where risk and value are emerging</li>
+      <li>Retain and audit GenAI activity for security, compliance, and governance</li>
+      <li>Enforce policies and reduce risk without slowing teams down</li>
+      <li>Turn visibility into value by identifying high-impact use cases and adoption gaps</li>
+    </ul>
+    <h3>Presenters</h3>
+    <div class="bio-card">
+      <div class="bio-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);">KM</div>
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:karthik@portal26.ai">Karthikeyan Mariappan</a>
+        <div class="bio-role">Co-Founder &amp; VP Engineering</div>
+        <div class="bio-desc">Leads Engineering at Portal26, building the platform that helps enterprises capture and govern GenAI usage at scale. Career spent shipping enterprise software across cloud, data, and security.</div>
+      </div>
+    </div>
+    <div class="bio-card">
+      <div class="bio-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);">JB</div>
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:joe@portal26.ai">Joe Boggio</a>
+        <div class="bio-role">VP Alliances</div>
+        <div class="bio-desc">Leads Alliances at Portal26, building partner motions to help enterprises adopt GenAI safely and at speed. Prior leadership roles at Microsoft and Capgemini.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ONEITZ MODAL -->
+<div class="modal-overlay" id="oneitz-modal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('oneitz-modal')">&times;</button>
+    <img src="Headshots %26 Bios/OneITz/oneitz-logo-black.png" alt="OneITz" style="height:44px;margin-bottom:0.75rem;">
+    <h2>Cybersecurity in the AI Era</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">Thursday, April 2 &middot; 9:00 AM &middot; South Pacific 1/2</p>
+    <p style="margin-top:1rem;">OneITz was founded on a simple belief: organizations deserve IT partners they can trust. They work primarily with clients in financial services and life sciences &mdash; industries where security, compliance, and operational discipline are non-negotiable. Their mission is to provide proactive, cybersecurity-first IT services that enable focus, growth, and trust.</p>
+    <p style="margin-top:0.75rem;font-size:0.85rem;color:#6b7b8d;">Also hosting the <strong>Wednesday After Party</strong> on the Rooftop (9:30 PM).</p>
+    <h3>Presenters</h3>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/OneITz/Dan5.jpg" alt="Dan O'Neill">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:doneill@oneitz.com">Dan O'Neill</a>
+        <div class="bio-role">Founder &amp; CEO</div>
+        <div class="bio-desc">25 years working directly for VC/PE firms and their portfolio companies. Played a pivotal role at Polaris Partners before building Frequency Therapeutics from seed to a $1.5B public company. Long-time VCPEIT community member and former board member.</div>
+      </div>
+    </div>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/OneITz/ward-headshot.jpg" alt="Ward Spangenberg">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:wspangenberg@oneitz.com">Ward Spangenberg</a>
+        <div class="bio-role">CISO</div>
+        <div class="bio-desc">Leads security strategy, cloud modernization, and advanced risk modeling. Focused on how modern attack paths form across cloud, identity, and SaaS environments &mdash; and how graph analysis exposes risks that traditional security models miss.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WOLF MODAL -->
+<div class="modal-overlay" id="wolf-modal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('wolf-modal')">&times;</button>
+    <img src="Headshots %26 Bios/Wolf/Wolf-logo%20Primary%20Gradient%20RGB%20%281%29.jpg" alt="Wolf &amp; Company" style="height:44px;margin-bottom:0.75rem;border-radius:4px;">
+    <h2>Data First Decision Making Without Sacrificing Compliance</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">Thursday, April 2 &middot; 9:30 AM &middot; South Pacific 1/2</p>
+    <p style="margin-top:1rem;">Wolf &amp; Company, P.C. is a leading CPA and advisory firm since 1911, serving over 400 financial institutions and fintech organizations nationwide. They provide tailored public accounting, risk management, and data-driven consulting services including financial statement audit, tax, internal audit, cybersecurity, regulatory compliance, and data solutions.</p>
+    <h3>Presenters</h3>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Wolf/Goodwin%2C%20Sean%20Social_Proposal%20%281%29.png" alt="Sean Goodwin">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:SDGoodwin@wolfandco.com">Sean Goodwin</a>
+        <div class="bio-role">Principal, DenSecure</div>
+        <div class="bio-desc">Leads engagements across offensive and defensive security including penetration tests, social engineering, threat emulation, red teams, vCISO consulting, and digital forensic investigations. Over a decade of consulting experience across financial, healthcare, education, and software sectors.</div>
+      </div>
+    </div>
+    <div class="bio-card">
+      <img class="bio-headshot" src="Headshots %26 Bios/Wolf/Wess%2C%20Philip%20Social_Proposal%20%281%29.png" alt="Phil Wess">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:PWess@wolfandco.com">Phil Wess</a>
+        <div class="bio-role">Principal, Data Solutions</div>
+        <div class="bio-desc">Leads implementation of value-driven data strategies and custom software development. Two decades of experience building software and data systems, focused on scalable data applications for mid-market, PE-owned companies.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ALEXIS MODAL -->
+<div class="modal-overlay" id="alexis-modal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('alexis-modal')">&times;</button>
+    <h2>Standing Out in a Virtual World &mdash; Building Your Brand</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">Wednesday, April 1 &middot; 10:00 AM &middot; South Pacific 1/2</p>
+    <div class="bio-card" style="margin-top:1rem;">
+      <img class="bio-headshot" src="Headshots %26 Bios/Alexis/Alexis.png" alt="Alexis Bertholf">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:alexis.bertholf@megaport.com">Alexis Bertholf</a>
+        <div class="bio-role">Global Technical Evangelist, Megaport</div>
+        <div class="bio-desc">Works at the intersection of cloud networking, technical storytelling, and industry education. Through her platform digital.byte, Alexis has built a global community by making enterprise technology more human and relatable.</div>
+      </div>
+    </div>
+    <p style="margin-top:1rem;">This session explores why personal branding and technical visibility have become critical leadership tools for CIOs, CTOs, IT leaders, and former engineers responsible for driving strategy in a digital-first world. Attendees will leave with practical ways to strengthen technical influence, elevate visibility, and better communicate the strategic role technology plays in shaping the future of the business.</p>
+  </div>
+</div>
+
+<!-- CHRIS YEH MODAL -->
+<div class="modal-overlay" id="chrisyeh-modal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('chrisyeh-modal')">&times;</button>
+    <h2>Investor, Entrepreneur and Author of Blitzscaling</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">Tuesday, March 31 &middot; 11:15 AM &middot; South Pacific 1/2</p>
+    <div class="bio-card" style="margin-top:1rem;">
+      <img class="bio-headshot" src="Headshots %26 Bios/Chris%20Yeh/Chris_yeh.png" alt="Chris Yeh">
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:chris@wasabi.ventures">Chris Yeh</a>
+        <div class="bio-role">Investor, Entrepreneur, Author</div>
+        <div class="bio-desc">Co-author of <em>Blitzscaling</em> with Reid Hoffman. Investor, entrepreneur, and writer focused on helping companies scale rapidly in uncertain environments.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LUKE SHOBERG MODAL -->
+<div class="modal-overlay" id="luke-modal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('luke-modal')">&times;</button>
+    <h2>Roundtable: Governing AI at Scale &mdash; Policy, Risk and Responsible Adoption</h2>
+    <p style="color:#6b7b8d;font-size:0.85rem;">Thursday, April 2 &middot; 11:00 AM &middot; South Pacific 1/2</p>
+    <div class="bio-card" style="margin-top:1rem;">
+      <div class="bio-avatar" style="background:linear-gradient(135deg,var(--teal),var(--navy));width:48px;height:48px;font-size:0.85rem;">LS</div>
+      <div class="bio-info">
+        <a class="bio-name" href="mailto:lshoberg@latacora.com">Luke Shoberg</a>
+        <div class="bio-role">Latacora &middot; Former Global CISO, Sequoia Capital</div>
+        <div class="bio-desc">Luke took an unconventional path from studying biology at Cornell to becoming Global CISO at Sequoia Capital before joining Latacora. He specializes in what makes VC and PE security uniquely challenging, and how firms can implement scale-appropriate security without killing innovation.</div>
+      </div>
+    </div>
+    <h3 style="margin-top:1.2rem;">About Latacora</h3>
+    <p>Latacora develops, grows, and maintains information security practices for tech-forward businesses. They join engineering teams as a retained security team, build or rebuild security practices, scale them to the organization's needs, and then help bring those capabilities in-house. Clients include Notion and other high-performing platforms across financial services, healthcare, and authentication.</p>
+    <p style="margin-top:0.5rem;"><a href="mailto:lshoberg@latacora.com" style="color:var(--blue);font-weight:600;text-decoration:none;">lshoberg@latacora.com</a></p>
+  </div>
+</div>
+
+<script>
+const attendees = [
+  {name:"David Albert",company:"GrowthPoint",location:"San Francisco",email:"dalbert@gptpartners.com",committee:false,firstTime:false},
+  {name:"Todd Algren",company:"Stone Point Capital",location:"San Francisco",email:"talgren@stonepoint.com",committee:false,firstTime:false},
+  {name:"Nick Aqleh",company:"Level Equity",location:"New York",email:"naqleh@levelequity.com",committee:false,firstTime:false},
+  {name:"David Baca",company:"Khosla Ventures",location:"San Francisco",email:"db@khoslaventures.com",committee:true,firstTime:false},
+  {name:"Ryan Bateman",company:"Sands Capital",location:"Washington, DC",email:"rbateman@sandscap.com",committee:false,firstTime:false},
+  {name:"Rob Bedal",company:"Norwest",location:"San Francisco",email:"rbedal@nvp.com",committee:false,firstTime:false},
+  {name:"Pete Borchers",company:"Madison Dearborn Partners",location:"Chicago",email:"pborchers@mdcp.com",committee:false,firstTime:true},
+  {name:"Kerry Buckley",company:"Greylock",location:"Boston",email:"kbuckley@greylock.com",committee:true,firstTime:false},
+  {name:"Mike Burkowsky",company:"Thrive Capital",location:"New York",email:"mike@thrivecap.com",committee:false,firstTime:false},
+  {name:"Jeff Carlson",company:"PPC",location:"Chicago",email:"jcarlson@ppcpartners.com",committee:false,firstTime:false},
+  {name:"John Carpenter",company:"Madrona",location:"Seattle",email:"john@madrona.com",committee:false,firstTime:false},
+  {name:"Ravi Chahal",company:"STG Partners",location:"San Francisco",email:"ravi@stgpartners.com",committee:false,firstTime:false},
+  {name:"Dixon Chan",company:"Accel",location:"San Francisco",email:"dchan@accel.com",committee:false,firstTime:false},
+  {name:"Theresa Chang",company:"Horsley Bridge Partners",location:"San Francisco",email:"theresa@horsleybridge.com",committee:false,firstTime:false},
+  {name:"Brian Cohn",company:"FCP",location:"Washington, DC",email:"bcohn@fcpdc.com",committee:false,firstTime:false},
+  {name:"Mike Conlon",company:"CFI Partners",location:"Chicago",email:"mconlon@cfipartners.com",committee:false,firstTime:false},
+  {name:"Jason Connors",company:"Marlin Equity Partners",location:"Los Angeles",email:"jconnors@marlinoperations.com",committee:false,firstTime:false},
+  {name:"Michael DeCaro",company:"Lightspeed",location:"San Francisco",email:"mdecaro@lsvp.com",committee:true,firstTime:false},
+  {name:"Ryan Donnon",company:"First Round Capital",location:"Philadelphia",email:"ryan@firstround.com",committee:true,firstTime:false},
+  {name:"Rob Doten",company:"Golden Gate Capital",location:"San Francisco",email:"robd@goldengatecap.com",committee:false,firstTime:false},
+  {name:"Jim Dueltgen",company:"MAP Energy",location:"San Francisco",email:"jim@map-energy.com",committee:false,firstTime:false},
+  {name:"Leo Fitzpatrick",company:"One Rock Capital Partners",location:"New York",email:"lfitzpatrick@onerock.com",committee:true,firstTime:false},
+  {name:"Ivan Flores",company:"Stone Point Capital",location:"New York",email:"iflores@stonepoint.com",committee:true,firstTime:false},
+  {name:"Tony Foley",company:"RCF Management LLC",location:"Denver",email:"tfoley@rcflp.com",committee:false,firstTime:false},
+  {name:"Dave Grenetz",company:"Notable Capital",location:"San Francisco",email:"dgrenetz@notablecap.com",committee:false,firstTime:false},
+  {name:"Ryan Harper",company:"Linden Capital Partners",location:"Chicago",email:"rharper@linden.com",committee:false,firstTime:false},
+  {name:"Greg Harrington",company:"Great Hill Partners",location:"Boston",email:"gharrington@greathillpartners.com",committee:false,firstTime:false},
+  {name:"Ali Hasanali",company:"TJC LP",location:"Chicago",email:"ahasanali@tjclp.com",committee:false,firstTime:false},
+  {name:"Edward Ho",company:"ARCH Venture Partners",location:"Chicago",email:"eho@archventure.com",committee:true,firstTime:false},
+  {name:"Jeff Jonson",company:"Longitude Capital",location:"San Francisco",email:"jjonson@longitudecapital.com",committee:false,firstTime:false},
+  {name:"Joshua Kirkes",company:"Emergence Capital",location:"San Francisco",email:"joshua@emcap.com",committee:true,firstTime:false},
+  {name:"Lena Klassen",company:"Madrona",location:"Seattle",email:"lena@madrona.com",committee:false,firstTime:false},
+  {name:"Joy Knox",company:"Gradient Learning",location:"San Francisco",email:"joyfloresca@gmail.com",committee:false,firstTime:false},
+  {name:"Pauline Kress",company:"Riot Ventures",location:"Los Angeles",email:"pauline@riot.vc",committee:false,firstTime:true},
+  {name:"Chris Lang",company:"Riverwood Capital Management L.P.",location:"San Francisco",email:"clang@rwcm.com",committee:false,firstTime:true},
+  {name:"Tony LaRosa",company:"Clearlake Capital",location:"Los Angeles",email:"tlarosa@clearlake.com",committee:false,firstTime:false},
+  {name:"Ivan Learmont",company:"Northpond Ventures",location:"Washington, DC",email:"ivan@npv.vc",committee:false,firstTime:false},
+  {name:"Randy Lehman",company:"VSS Capital",location:"New York",email:"lehmanr@vss.com",committee:false,firstTime:false},
+  {name:"Thomas McDonough",company:"Duchossois Capital Management",location:"Chicago",email:"tmcd@duch.com",committee:false,firstTime:false},
+  {name:"Phil Mentesana",company:"New Mountain Capital",location:"New York",email:"pmentesana@newmountaincapital.com",committee:false,firstTime:false},
+  {name:"JD Miller",company:"Altos Ventures",location:"San Francisco",email:"jd@altos.vc",committee:false,firstTime:false},
+  {name:"Alex Moratorio",company:"PCCP, LLC",location:"Los Angeles",email:"amoratorio@pccpllc.com",committee:false,firstTime:false},
+  {name:"Kei Nakazono",company:"Frazier Life Sciences",location:"San Francisco",email:"kei@frazierls.com",committee:false,firstTime:false},
+  {name:"Thomas Natanek",company:"Twin Bridge Capital Partners",location:"Chicago",email:"tnatanek@twinbridgecapital.com",committee:false,firstTime:false},
+  {name:"Paul Newey",company:"Sorenson Capital",location:"Salt Lake City",email:"pnewey@sorensoncap.com",committee:false,firstTime:false},
+  {name:"Philip Pedro",company:"KFF",location:"San Francisco",email:"philipp@kff.org",committee:false,firstTime:false},
+  {name:"Matt Penney",company:"Battery Ventures",location:"Boston",email:"mpenney@battery.com",committee:true,firstTime:false},
+  {name:"David Richey",company:"Parthenon Capital",location:"San Francisco",email:"davidr@parthenoncapital.com",committee:false,firstTime:false},
+  {name:"Joe Russell",company:"Galvanize Climate Solutions",location:"San Francisco",email:"joe.russell@galvanizeclimate.com",committee:false,firstTime:false},
+  {name:"Eric Serrano",company:"Greycroft",location:"Los Angeles",email:"eric.serrano@greycroft.com",committee:false,firstTime:false},
+  {name:"Luke Shoberg",company:"Latacora",location:"San Francisco",email:"lshoberg@latacora.com",committee:false,firstTime:false},
+  {name:"Nancy Straface",company:"Bessemer Venture Partners",location:"New York",email:"nancyn@bvp.com",committee:false,firstTime:false},
+  {name:"Bhupen Tandel",company:"Alpine Investors",location:"San Francisco",email:"btandel@alpineinvestors.com",committee:false,firstTime:false},
+  {name:"Michael Traski",company:"IVP",location:"San Francisco",email:"mtraski@ivp.com",committee:false,firstTime:false},
+  {name:"Dave Vega",company:"Insight Partners",location:"New York",email:"dvega@insightpartners.com",committee:false,firstTime:false},
+  {name:"Patrick Welch",company:"GI Partners",location:"San Francisco",email:"pwelch@gipartners.com",committee:false,firstTime:false},
+  {name:"Josh Willis",company:"Alpine Investors",location:"San Francisco",email:"jwillis@alpineinvestors.com",committee:false,firstTime:false},
+  {name:"Zack Willis",company:"Insight Partners",location:"New York",email:"zwillis@insightpartners.com",committee:false,firstTime:false},
+  {name:"Christopher Zale",company:"Kohlberg",location:"New York",email:"zale@kohlberg.com",committee:false,firstTime:false},
+  {name:"Daniel Zanartu",company:"Redmile Group",location:"San Francisco",email:"dzanartu@redmilegrp.com",committee:false,firstTime:false}
+];
+
+const sponsors = [
+  {name:"Serval",session:"Agentic AI for IT Service Management",when:"Tue Mar 31, 9:00 AM",extra:"After Party Host (Mon)",email:"sales@serval.com",people:["Danny Carlson","Chris Comes","Hannah Wood","Alan Shreve"]},
+  {name:"Harmonic",session:"AI Sourcing \u2014 The Startup Discovery Engine",when:"Tue Mar 31, 10:00 AM",email:"hello@harmonic.ai",people:["Max Ruderman","Mike Palmer","Carter Headley"]},
+  {name:"Slalom",session:"Live Training: Building with AI for VC/PE + Hackathon",when:"Tue Mar 31, 1:00 PM",email:"hello@slalom.com",people:["James Young","Will Thieme","Amy Roberts Terry"]},
+  {name:"Adaptive Security",session:"Luau Sponsor",when:"Tue Mar 31, 6:30 PM",email:"info@adaptivesecurity.com"},
+  {name:"Portal26",session:"Securing, Governing & Optimizing GenAI",when:"Wed Apr 1, 8:45 AM",email:"info@portal26.ai",people:["Karthikeyan Mariappan","Joe Boggio"]},
+  {name:"OneITz",session:"Cybersecurity in the AI Era",when:"Thu Apr 2, 9:00 AM",extra:"After Party Host (Wed)",email:"info@oneitz.com",people:["Dan O'Neill","Ward Spangenberg"]},
+  {name:"Wolf & Company",session:"Data First Decision Making Without Sacrificing Compliance",when:"Thu Apr 2, 9:30 AM",email:"info@wolfandco.com",people:["Sean Goodwin","Phil Wess"]}
+];
+
+const headshots = {
+  "Ali Hasanali":"Ali%20Hasanali.png","Bhupen Tandel":"Bhupen%20Tandel.jpg",
+  "Brian Cohn":"Brian%20Cohn.jpg","Chris Lang":"Chris%20Lang.jpg",
+  "Christopher Zale":"Christopher%20Zale.jpg","Dave Grenetz":"Dave%20Grenetz.png",
+  "David Albert":"David%20Albert.png","Edward Ho":"Edward%20Ho.jpeg",
+  "Eric Serrano":"Eric%20Serrano.JPG","Greg Harrington":"Greg%20Harrington.png",
+  "Ivan Flores":"Ivan%20Flores.jpg","Ivan Learmont":"Ivan%20Learmont.jpg",
+  "Jason Connors":"Jason%20Connors.jpg","JD Miller":"JD%20Miller.jpeg",
+  "Jeff Carlson":"Jeff%20Carlson.jpg","Jim Dueltgen":"Jim%20Dueltgen.jpg",
+  "Joe Russell":"Joe%20Russell.jpeg","John Carpenter":"John%20Carpenter.jpg",
+  "Joshua Kirkes":"Joshua%20Kirkes.jpg","Joy Knox":"Joy%20Knox.jpeg",
+  "Kei Nakazono":"Kei%20Nakazono.jpeg","Kerry Buckley":"Kerry%20Buckley.jpg",
+  "Lena Klassen":"Lena%20Klassen.jpeg","Leo Fitzpatrick":"Leo%20Fitzpatrick.jpg",
+  "Matt Penney":"Matt%20Penney.png","Michael DeCaro":"Michael%20DeCaro.jpg",
+  "Michael Traski":"Michael%20Traski.jpeg","Nancy Straface":"Nancy%20Straface.jpg",
+  "Nick Aqleh":"Nick%20Aqleh.jpeg","Pauline Kress":"Pauline%20Kress.jpg",
+  "Pete Borchers":"Pete%20Borchers.jpg","Phil Mentesana":"Phil%20Mentesana.jpg",
+  "Randy Lehman":"Randy%20Lehman.jpg","Ravi Chahal":"ravi_chahal.jpeg",
+  "Rob Bedal":"Rob%20Bedal.jpg","Ryan Bateman":"Ryan%20Bateman.jpg",
+  "Ryan Donnon":"Ryan%20Donnon.jpeg","Theresa Chang":"Theresa%20Chang.jpg",
+  "Thomas McDonough":"Thomas%20McDonough.jpg","Thomas Natanek":"Thomas%20Natanek.jpg",
+  "Tony Foley":"Tony%20Foley.jpg","Zack Willis":"Zack%20Willis.jpg"
+};
+const headshotBase = "Headshots %26 Bios/Attendee%20Headshots/";
+
+function getInitials(name) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase();
+}
+
+function getAvatarHtml(name) {
+  if (headshots[name]) {
+    return `<img class="avatar-img" src="${headshotBase}${headshots[name]}" alt="${name}">`;
+  }
+  return `<div class="avatar">${getInitials(name)}</div>`;
+}
+
+function renderAttendeeCard(a) {
+  let badges = '';
+  if (a.committee) badges += '<span class="badge badge-committee">Committee</span>';
+  if (a.firstTime) badges += '<span class="badge badge-firsttime">First Time</span>';
+  return `<a class="attendee-card" href="mailto:${a.email}" title="Email ${a.name}" data-attendee="${a.name}">
+    ${getAvatarHtml(a.name)}
+    <div class="attendee-info">
+      <div class="attendee-name">${a.name}</div>
+      <div class="attendee-company">${a.company}</div>
+      <div class="attendee-location">${a.location}</div>
+      ${badges ? '<div class="attendee-badges">' + badges + '</div>' : ''}
+      <div class="email-hint">${a.email}</div>
+    </div>
+  </a>`;
+}
+
+function renderAttendees(list) {
+  const grid = document.getElementById('attendee-grid');
+  const count = document.getElementById('attendee-count');
+  count.textContent = list.length + ' attendee' + (list.length !== 1 ? 's' : '');
+  grid.innerHTML = list.map(renderAttendeeCard).join('');
+}
+
+function showTab(id) {
+  document.getElementById('global-search').value = '';
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const btn = document.querySelector(`#main-nav button[onclick="showTab('${id}')"]`);
+  if (btn) btn.classList.add('active');
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => { m.classList.remove('open'); });
+    document.body.style.overflow = '';
+  }
+});
+
+// Global search
+function globalSearch(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) {
+    document.getElementById('search-results').classList.remove('active');
+    // restore previous tab
+    const activeBtn = document.querySelector('#main-nav button.active');
+    if (activeBtn) {
+      const tabId = activeBtn.getAttribute('onclick').match(/'(\w+)'/)[1];
+      document.getElementById(tabId).classList.add('active');
+    } else {
+      document.getElementById('schedule').classList.add('active');
+    }
+    return;
+  }
+
+  // Hide all tabs, show search results
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const sr = document.getElementById('search-results');
+  sr.classList.add('active');
+
+  let html = '';
+
+  // Search agenda events
+  const events = document.querySelectorAll('#schedule .event');
+  const matchedEvents = [];
+  events.forEach(ev => {
+    if (ev.textContent.toLowerCase().includes(q)) {
+      matchedEvents.push(ev.outerHTML);
+    }
+  });
+  if (matchedEvents.length) {
+    html += '<div class="search-section-header">Schedule (' + matchedEvents.length + ')</div>';
+    html += matchedEvents.join('');
+  }
+
+  // Search attendees
+  const matchedAttendees = attendees.filter(a =>
+    a.name.toLowerCase().includes(q) ||
+    a.company.toLowerCase().includes(q) ||
+    a.location.toLowerCase().includes(q) ||
+    a.email.toLowerCase().includes(q)
+  );
+  if (matchedAttendees.length) {
+    html += '<div class="search-section-header">Attendees (' + matchedAttendees.length + ')</div>';
+    html += '<div class="attendee-grid">' + matchedAttendees.map(renderAttendeeCard).join('') + '</div>';
+  }
+
+  // Search sponsors (by name, session, email, and presenter names)
+  const matchedSponsors = sponsors.filter(s =>
+    s.name.toLowerCase().includes(q) ||
+    s.session.toLowerCase().includes(q) ||
+    (s.email && s.email.toLowerCase().includes(q)) ||
+    (s.people && s.people.some(p => p.toLowerCase().includes(q)))
+  );
+  if (matchedSponsors.length) {
+    html += '<div class="search-section-header">Sponsors (' + matchedSponsors.length + ')</div>';
+    const sponsorCards = document.querySelectorAll('#sponsors .sponsor-card');
+    const sponsorNames = matchedSponsors.map(s => s.name.toLowerCase());
+    sponsorCards.forEach(sc => {
+      const cardName = sc.querySelector('.sponsor-name')?.textContent.toLowerCase() || '';
+      if (sponsorNames.some(n => cardName.includes(n) || n.includes(cardName))) {
+        html += sc.outerHTML;
+      }
+    });
+  }
+
+  if (!html) {
+    html = '<div class="no-results">No results found for "' + query.replace(/</g,'&lt;') + '"</div>';
+  }
+
+  sr.innerHTML = html;
+}
+
+// Auto-scroll to current/next event based on device time
+function scrollToNow() {
+  const now = new Date();
+  const events = document.querySelectorAll('#schedule .event[data-datetime]');
+  let currentEvent = null;
+  let nextEvent = null;
+
+  events.forEach(ev => {
+    ev.classList.remove('now-indicator');
+    const badge = ev.querySelector('.now-badge');
+    if (badge) badge.remove();
+  });
+
+  for (let i = 0; i < events.length; i++) {
+    const dt = new Date(events[i].dataset.datetime);
+    const nextDt = i + 1 < events.length ? new Date(events[i + 1].dataset.datetime) : null;
+
+    if (now >= dt && (!nextDt || now < nextDt)) {
+      currentEvent = events[i];
+      break;
+    }
+    if (now < dt) {
+      nextEvent = events[i];
+      break;
+    }
+  }
+
+  const target = currentEvent || nextEvent;
+  if (target) {
+    target.classList.add('now-indicator');
+    const badge = document.createElement('span');
+    badge.className = 'now-badge';
+    badge.textContent = currentEvent ? 'NOW' : 'UP NEXT';
+    target.appendChild(badge);
+    setTimeout(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
+  }
+}
+
+// Map zoom
+function openMapZoom(src) {
+  document.getElementById('map-zoom-img').src = src;
+  openModal('map-zoom');
+}
+
+// Navigate to an attendee card in the Attendees tab
+function goToAttendee(name) {
+  showTab('attendees');
+  requestAnimationFrame(() => {
+    const card = document.querySelector(`[data-attendee="${name}"]`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.add('highlight');
+      setTimeout(() => card.classList.remove('highlight'), 3200);
+    }
+  });
+}
+
+// Cat Mode
+let catModeOn = false;
+const catReplacements = [
+  [/\bBreakfast\b/g, 'Breakfast (Tuna Pate)'],
+  [/\bLunch\b/g, 'Lunch (Fancy Feast)'],
+  [/\bDinner\b/g, 'Dinner (Salmon Surprise)'],
+  [/\bNetworking\b/g, 'Napping'],
+  [/\bRoundtable\b/g, 'Round Yarn Ball'],
+  [/\bHackathon\b/g, 'Cat-a-thon'],
+  [/\bKeyNote\b/gi, 'Keynap'],
+  [/\bBreak\b/g, 'Nap Time'],
+  [/\bSponsor\b/g, 'Treat Giver'],
+  [/\bSpeaker\b/g, 'Head Meower'],
+  [/\bDebrief\b/g, 'Grooming Session'],
+  [/\bDemo\b/g, 'Show & Pounce'],
+  [/\bPresentation\b/g, 'Purr-sentation'],
+  [/\bConference\b/g, 'Cat-ference'],
+  [/\bWelcome Reception\b/g, 'Welcome Purr-ception'],
+  [/\bBoat Cruise\b/g, 'Catamaran Cruise'],
+  [/\bLuau\b/g, 'Me-Luau'],
+  [/\bCybersecurity\b/g, 'Cyberpurr-ity'],
+  [/\bAI\b/g, 'A.I. (Artificial Instinct)'],
+  [/\bVibe Coding\b/g, 'Vibe Clawing'],
+  [/\bBlitzscaling\b/g, 'Blitzscratch-ing'],
+  [/\bWalk to\b/g, 'Prowl to'],
+  [/\bMeet in Lobby\b/g, 'Gather at the Scratching Post'],
+  [/\bFree Time\b/g, 'Zoomies Time'],
+  [/\bClosing\b/g, 'Cat Nap'],
+];
+const catEmojis = ['😸','😹','😻','😽','🐱','🐾','🙀','😿','😼','🐈','🐈‍⬛','🧶','🐟','🐭','🥛'];
+let originalTexts = new Map();
+
+function catifyText(text) {
+  let result = text;
+  for (const [pattern, replacement] of catReplacements) {
+    result = result.replace(pattern, replacement);
+  }
+  return result;
+}
+
+function catifyElement(el) {
+  if (el.childNodes.length === 0) return;
+  for (const node of el.childNodes) {
+    if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+      if (!originalTexts.has(node)) {
+        originalTexts.set(node, node.textContent);
+      }
+      node.textContent = catifyText(node.textContent);
+    } else if (node.nodeType === Node.ELEMENT_NODE && !node.classList.contains('modal-overlay') && node.tagName !== 'INPUT' && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE') {
+      catifyElement(node);
+    }
+  }
+}
+
+function uncatifyAll() {
+  for (const [node, original] of originalTexts) {
+    try { node.textContent = original; } catch(e) {}
+  }
+  originalTexts.clear();
+}
+
+function spawnCatEmoji(x, y) {
+  const el = document.createElement('div');
+  el.className = 'cat-float';
+  el.textContent = catEmojis[Math.floor(Math.random() * catEmojis.length)];
+  el.style.left = (x + (Math.random() - 0.5) * 60) + 'px';
+  el.style.top = y + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2100);
+}
+
+function showCatToast(msg) {
+  const existing = document.querySelector('.cat-toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = 'cat-toast';
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2500);
+}
+
+let catIntervals = [];
+let catElements = [];
+
+function startCatRain() {
+  const cats = ['🐱','🐈','🐈‍⬛','😸','😻','🙀','🧶','🐟','🥛','🐾','😹','😽','🐭','😼'];
+  const iv = setInterval(() => {
+    const drop = document.createElement('div');
+    drop.className = 'cat-rain';
+    drop.textContent = cats[Math.floor(Math.random() * cats.length)];
+    drop.style.left = Math.random() * 100 + 'vw';
+    drop.style.animationDuration = (2 + Math.random() * 3) + 's';
+    drop.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+    document.body.appendChild(drop);
+    catElements.push(drop);
+    setTimeout(() => drop.remove(), 5000);
+  }, 300);
+  catIntervals.push(iv);
+}
+
+function startWalkingCat() {
+  const walker = document.createElement('div');
+  walker.className = 'walking-cat';
+  walker.textContent = '🐈';
+  document.body.appendChild(walker);
+  catElements.push(walker);
+  // second cat, offset
+  const walker2 = document.createElement('div');
+  walker2.className = 'walking-cat';
+  walker2.textContent = '🐈‍⬛';
+  walker2.style.animationDelay = '4s';
+  walker2.style.bottom = '30px';
+  walker2.style.fontSize = '2.5rem';
+  document.body.appendChild(walker2);
+  catElements.push(walker2);
+}
+
+function startCatBanner() {
+  const banner = document.createElement('div');
+  banner.className = 'cat-banner';
+  banner.id = 'cat-banner';
+  banner.innerHTML = '🐱 MEOW MODE ACTIVATED 🐾 CATS CATS CATS 😸 PURRFESSIONAL CONFERENCE 🐈 MEOW MODE ACTIVATED 🐾';
+  document.body.appendChild(banner);
+  catElements.push(banner);
+  // push body down
+  document.body.style.paddingTop = '36px';
+}
+
+function addCatToCards() {
+  document.querySelectorAll('.event-title').forEach(el => {
+    if (!el.dataset.catted) {
+      el.dataset.catted = '1';
+      const cats = ['🐱','😸','😻','🐾','🐈','😹','🙀'];
+      el.textContent = cats[Math.floor(Math.random() * cats.length)] + ' ' + el.textContent;
+    }
+  });
+  document.querySelectorAll('.sponsor-name').forEach(el => {
+    if (!el.dataset.catted) {
+      el.dataset.catted = '1';
+      el.textContent = '🐾 ' + el.textContent;
+    }
+  });
+  document.querySelectorAll('.day-header').forEach(el => {
+    if (!el.dataset.catted) {
+      el.dataset.catted = '1';
+      el.textContent = '😸 ' + el.textContent + ' 🐱';
+    }
+  });
+}
+
+function removeCatFromCards() {
+  document.querySelectorAll('[data-catted]').forEach(el => {
+    delete el.dataset.catted;
+  });
+}
+
+function meowOnClick(e) {
+  spawnCatEmoji(e.clientX, e.clientY);
+}
+
+function toggleCatMode() {
+  catModeOn = !catModeOn;
+  const body = document.body;
+  const logo = document.querySelector('.header-logo');
+  const venue = document.getElementById('venue-text');
+
+  if (catModeOn) {
+    body.classList.add('cat-mode');
+    document.title = '🐱 VCPURRIT 2026 - Meow-nolulu 🐾';
+    venue.textContent = 'Meowch 30 - Apurr 2 \u00B7 Hilton Hawaiicat Village Whisker Beach Resort 🐈';
+    catifyElement(document.querySelector('.content'));
+    addCatToCards();
+    renderAttendees(attendees);
+
+    // explosion of cats from logo
+    const rect = logo.getBoundingClientRect();
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => spawnCatEmoji(
+        rect.left + rect.width / 2 + (Math.random() - 0.5) * 200,
+        rect.top + rect.height / 2
+      ), i * 80);
+    }
+
+    startCatBanner();
+    startCatRain();
+    startWalkingCat();
+    document.addEventListener('click', meowOnClick);
+
+    showCatToast('😸🐾 MEOW MODE ACTIVATED 🐾😸');
+  } else {
+    body.classList.remove('cat-mode');
+    document.title = 'VCPEIT 2026 - Honolulu';
+    venue.textContent = 'March 30 - April 2 \u00B7 Hilton Hawaiian Village Waikiki Beach Resort';
+    uncatifyAll();
+    removeCatFromCards();
+    renderAttendees(attendees);
+
+    // clean up all cat elements
+    catElements.forEach(el => { try { el.remove(); } catch(e) {} });
+    catElements = [];
+    catIntervals.forEach(iv => clearInterval(iv));
+    catIntervals = [];
+    body.style.paddingTop = '';
+    document.removeEventListener('click', meowOnClick);
+
+    showCatToast('😿 Back to boring hooman mode...');
+  }
+}
+
+// Init
+renderAttendees(attendees);
+scrollToNow();
+</script>
+</body>
+</html>
